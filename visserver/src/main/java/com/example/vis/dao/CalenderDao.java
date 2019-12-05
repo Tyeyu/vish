@@ -12,7 +12,7 @@ public class CalenderDao {
 	@SuppressWarnings("unchecked")
 	public <T> List<T> selectlikedate(NamedParameterJdbcTemplate jdbcTemplate,String date){
 		String sqlone="select * from Calendardata1 where Date like '"+date+"%'";
-		String sqltwo="select * from Calendardata1 where Date like '"+date+"%'";
+		String sqltwo="select * from Calendardata2 where Date like '"+date+"%'";
 		BeanPropertyRowMapper<Calendardataone> rowMapper=new BeanPropertyRowMapper<Calendardataone>(Calendardataone.class);
 		List<T> one=(List<T>) jdbcTemplate.query(sqlone, rowMapper);
 		BeanPropertyRowMapper<Calendardatatwo> rowMapper2=new BeanPropertyRowMapper<Calendardatatwo>(Calendardatatwo.class);
