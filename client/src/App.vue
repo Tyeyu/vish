@@ -1,23 +1,40 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <Main></Main>
+    <calendar></calendar>
   </div>
 </template>
 
 <script>
+import Main from '@/components/main'
+import calendar from '@/components/Calendar'
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    Main,
+    calendar
+  }
 }
 </script>
 
 <style>
+ html,body{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    -moz-user-select:none;/*火狐*/
+    -webkit-user-select:none;/*webkit浏览器*/
+    -ms-user-select:none;/*IE10*/
+    -khtml-user-select:none;/*早期浏览器*/
+    user-select:none;
+  }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+position: fixed;
+    width: 100%;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    background-color:  #ebf5f0;
 }
 </style>

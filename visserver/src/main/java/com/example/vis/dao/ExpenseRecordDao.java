@@ -1,6 +1,5 @@
 package com.example.vis.dao;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.example.vis.entitys.ExpensesRecord;
+import com.example.vis.entitys.studentInfo;
 
 
 
@@ -56,9 +56,14 @@ public class ExpenseRecordDao {
 				index++;
 			}
 		}
-		System.out.println(sql);
 		BeanPropertyRowMapper<ExpensesRecord> rowMapper=new BeanPropertyRowMapper<ExpensesRecord>(ExpensesRecord.class);
 		List<ExpensesRecord> studentInfos=jdbcTemplate.query(sql, rowMapper);
 		return studentInfos.size()>0?studentInfos:null;
+	}
+	public List<ExpensesRecord> selectlikedate(NamedParameterJdbcTemplate jdbcTemplate,String date){
+		String sql="select * from data2 where Date like '"+date+"%'";
+		BeanPropertyRowMapper<ExpensesRecord> rowMapper=new BeanPropertyRowMapper<ExpensesRecord>(ExpensesRecord.class);
+		List<ExpensesRecord> Exs=jdbcTemplate.query(sql, rowMapper);
+		return Exs.size()>0?Exs:null;
 	}
 }

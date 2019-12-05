@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.vis.dao.AccessRecordDao;
+import com.example.vis.dao.CalenderDao;
 import com.example.vis.dao.ExpenseRecordDao;
 import com.example.vis.dao.stduendao;
 import com.example.vis.entitys.AccessRecord;
@@ -25,6 +26,7 @@ public class DataController extends AController{
 	private stduendao stdao=new stduendao();
 	private ExpenseRecordDao Edao=new ExpenseRecordDao();
 	private AccessRecordDao Adao=new AccessRecordDao();
+	private CalenderDao CaDao=new CalenderDao();
 	@RequestMapping(value="/All",method= RequestMethod.POST)//返回全部数据
 	public <T> List<T> hello(@RequestBody Map<String, String> datas) {
 		List<T>lists=null;
@@ -90,8 +92,31 @@ public class DataController extends AController{
 		default:
 			break;
 		}
-		
-		
 		return studentInfos;
+	}
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/Rdate",method= RequestMethod.POST)//返回相关时间
+	public <T> List<T> POSTdateR(@RequestBody Map<String, String> datas){
+		List<T> lists=null;
+		switch ((datas.get("tableID"))) {
+		case "2":
+			lists=(List<T>) Edao.selectlikedate(this.getJdbcTemplate(), datas.get("date"));
+			break;
+		case "3":
+			lists=(List<T>) Adao.selectlikedate(this.getJdbcTemplate(),  datas.get("date"));
+			break;
+		default:
+			break;
+		}
+		return lists;
+		
+	}
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/Calen",method= RequestMethod.POST)//返回相关时间
+	public <T> List<T> Calenderdata(@RequestBody Map<String, String> datas){
+		List<T> lists=null;
+		lists=(List<T>) CaDao.selectlikedate(this.getJdbcTemplate(), datas.get("date"));
+		return lists;
+		
 	}
 }

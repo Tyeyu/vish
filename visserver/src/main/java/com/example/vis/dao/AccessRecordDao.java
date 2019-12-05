@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.example.vis.entitys.AccessRecord;
+import com.example.vis.entitys.ExpensesRecord;
 
 
 public class AccessRecordDao {
@@ -58,5 +59,11 @@ public class AccessRecordDao {
 		BeanPropertyRowMapper<AccessRecord> rowMapper=new BeanPropertyRowMapper<AccessRecord>(AccessRecord.class);
 		List<AccessRecord> studentInfos=jdbcTemplate.query(sql, rowMapper);
 		return studentInfos.size()>0?studentInfos:null;
+	}
+	public List<AccessRecord> selectlikedate(NamedParameterJdbcTemplate jdbcTemplate,String date){
+		String sql="select * from data3 where Date like '"+date+"%'";
+		BeanPropertyRowMapper<AccessRecord> rowMapper=new BeanPropertyRowMapper<AccessRecord>(AccessRecord.class);
+		List<AccessRecord> Acs=jdbcTemplate.query(sql, rowMapper);
+		return  Acs.size()>0? Acs:null;
 	}
 }
