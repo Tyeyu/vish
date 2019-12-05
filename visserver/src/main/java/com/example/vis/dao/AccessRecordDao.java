@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.example.vis.entitys.AccessRecord;
-import com.example.vis.entitys.ExpensesRecord;
 
 
 public class AccessRecordDao {

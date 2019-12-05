@@ -16,9 +16,6 @@ import com.example.vis.dao.AccessRecordDao;
 import com.example.vis.dao.CalenderDao;
 import com.example.vis.dao.ExpenseRecordDao;
 import com.example.vis.dao.stduendao;
-import com.example.vis.entitys.AccessRecord;
-import com.example.vis.entitys.ExpensesRecord;
-import com.example.vis.entitys.studentInfo;
 @CrossOrigin(origins = {"http://localhost:8080", "null"})
 @RestController
 @Controller
@@ -27,6 +24,7 @@ public class DataController extends AController{
 	private ExpenseRecordDao Edao=new ExpenseRecordDao();
 	private AccessRecordDao Adao=new AccessRecordDao();
 	private CalenderDao CaDao=new CalenderDao();
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/All",method= RequestMethod.POST)//返回全部数据
 	public <T> List<T> hello(@RequestBody Map<String, String> datas) {
 		List<T>lists=null;
@@ -46,6 +44,7 @@ public class DataController extends AController{
 		
 		return lists;
 	}
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/Columns",method= RequestMethod.POST)//返回某几列全部数据
 	public <T> List<T> OneC(@RequestBody Map<String, String> datas) {
 		String[]cs=datas.get("Columns").split(",");
@@ -117,6 +116,5 @@ public class DataController extends AController{
 		List<T> lists=null;
 		lists=(List<T>) CaDao.selectlikedate(this.getJdbcTemplate(), datas.get("date"));
 		return lists;
-		
 	}
 }

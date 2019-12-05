@@ -9,6 +9,7 @@ import com.example.vis.entitys.Calendardataone;
 import com.example.vis.entitys.Calendardatatwo;
 
 public class CalenderDao {
+	@SuppressWarnings("unchecked")
 	public <T> List<T> selectlikedate(NamedParameterJdbcTemplate jdbcTemplate,String date){
 		String sqlone="select * from Calendardata1 where Date like '"+date+"%'";
 		String sqltwo="select * from Calendardata1 where Date like '"+date+"%'";
