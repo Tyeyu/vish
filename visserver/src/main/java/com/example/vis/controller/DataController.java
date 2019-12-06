@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.vis.dao.AccessRecordDao;
-import com.example.vis.dao.CalenderDao;
+import com.example.vis.dao.CalendarNodeAllDao;
 import com.example.vis.dao.ExpenseRecordDao;
 import com.example.vis.dao.stduendao;
 @CrossOrigin(origins = {"http://localhost:8080", "null"})
@@ -23,7 +23,7 @@ public class DataController extends AController{
 	private stduendao stdao=new stduendao();
 	private ExpenseRecordDao Edao=new ExpenseRecordDao();
 	private AccessRecordDao Adao=new AccessRecordDao();
-	private CalenderDao CaDao=new CalenderDao();
+	private CalendarNodeAllDao CNdao=new CalendarNodeAllDao();
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/All",method= RequestMethod.POST)//返回全部数据
 	public <T> List<T> hello(@RequestBody Map<String, String> datas) {
@@ -111,10 +111,10 @@ public class DataController extends AController{
 		
 	}
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/Calen",method= RequestMethod.POST)//返回相关时间
+	@RequestMapping(value="/CalenAll",method= RequestMethod.POST)//返回相关时间
 	public <T> List<T> Calenderdata(@RequestBody Map<String, String> datas){
 		List<T> lists=null;
-		lists=(List<T>) CaDao.selectlikedate(this.getJdbcTemplate(), datas.get("date"));
+		lists=(List<T>) CNdao.selectAlldate(this.getJdbcTemplate());
 		return lists;
 	}
 }

@@ -12,19 +12,21 @@ let width=500,height=650;
 export default {
     name:"calendar",
     methods:{
-        Calendardata:function(){
+        CalendarAllNodedata:function(){
             var datas={
             'date':"2019"
             }
             datas=JSON.stringify(datas);
+            let that=this;
             var x=$.ajax({
                 type: "post",
-                url: "http://localhost/Calen",
+                url: "http://localhost/CalenAll",
                 dataType:"json",
                 data: datas,
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-                    // console.log(result);
+                    console.log(result);
+                    that.drawCalendar(result)
                     // let morning=[] 
                     //  for(var i=0;i<result.length;i++){
                     //      var ds=result[i].date;
@@ -104,7 +106,8 @@ export default {
         }
     },
     mounted() {
-      this.drawCalendar()
+    //   this.drawCalendar()
+      this.CalendarAllNodedata()
     }
 
 }
