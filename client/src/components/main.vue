@@ -15,7 +15,6 @@ export default {
   methods:{
   }
 }
-d3.select("body").append("svg")
 //====
 //tableID 取值为1,2,3，代表3张表
 //============请求相关列指定范围数据

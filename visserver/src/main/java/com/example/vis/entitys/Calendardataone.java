@@ -3,29 +3,29 @@ package com.example.vis.entitys;
 public class Calendardataone {
 	private String CardNo;
 	private String Date;
-	private String Dept;
+	private String Address;
 	
 	public String getCardNo() {
 		return CardNo;
 	}
 	public void setCardNo(String cardNo) {
-		CardNo = cardNo;
+		this.CardNo = cardNo;
 	}
 	public String getDate() {
 		return Date;
 	}
 	public void setDate(String date) {
-		Date = date;
+		this.Date = date;
 	}
-	public String getDept() {
-		return Dept;
+	public String getAddress() {
+		return Address;
 	}
-	public void setDept(String dept) {
-		Dept = dept;
+	public void setAddress(String address) {
+		this.Address = address;
 	}
 	@Override
 	public String toString() {
-		return "Calendardataone [CardNo=" + CardNo + ", Date=" + Date + ", Dept=" + Dept + "]";
+		return "Calendardataone [CardNo=" + CardNo + ", Date=" + Date + ", Address=" + Address + "]";
 	}
 	
 }

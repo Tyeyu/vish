@@ -35,6 +35,6 @@ position: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    background-color:  #ebf5f0;
+    background-color:  #2b2c2c;
 }
 </style>
