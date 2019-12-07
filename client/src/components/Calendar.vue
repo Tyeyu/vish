@@ -33,6 +33,7 @@ export default {
         },
         drawCalendar:function(drawdata){
             let that=this;
+            
             var datenets=d3.nest()
                         .key(function(d) { return d.date; })
                         .entries(drawdata)
@@ -43,19 +44,35 @@ export default {
             var addressNets=d3.nest()
                         .key(function(d) { return d.address; })
                         .entries(drawdata)
+          
             let addressArry=['学生']
             let addranges=[0]
             for(var i=0;i<addressNets.length;i++){
                 addressArry[i+1]=addressNets[i].key
-                addranges[i+1]=(i+1)/addressNets.length
+                // addranges[i+1]=(i+1)/addressNets.length
+                addranges[i+1]=i+1
             }
             var scaleOrdinal = d3.scaleOrdinal()
                                 .domain(addressArry)
                                 .range(addranges);
-            let compute = d3.interpolate('#01BDD6','#FFEB3C')
-            //封装颜色比例尺
+            let computes=[]
+            var colors=["#FFFFCC", "#FFCCCC", "#CCCCFF", "#CCFF99", 
+            "#6699CC", "#66CCCC", "#99CC33", "#993366", 
+            "#CC9999", "#CC6600", "#FF6666", "#FF0033", 
+            "#666666", "#0099FF", "#669999", "#666699", 
+            "#FF9933", "#0ad811", "#bbd9fd", "#fe6cfe", 
+            "#297192", "#d1a09c", "#78579e", "#81ffad", 
+            "#739400", "#ca6949", "#d9bf01", "#646a58", 
+            "#d5097e", "#bb73a9", "#ccf6e9", "#9cb4b6", 
+            "#b6a7d4", "#9e8c62", "#6e83c8", "#01af64",
+             "#a71afd", "#cfe589", "#d4ccd1","#fd4109"];
+            var index=0;
+          
             var colorscale=function(d){
-                return compute(scaleOrdinal(d))
+                var value=scaleOrdinal(d)
+               
+                return colors[value]
+                
             }
             var edgescale=d3.scaleLinear()
             .domain([d3.min(drawdata,function(d){
@@ -64,19 +81,51 @@ export default {
                 return parseInt(d.count)
             })])
             .range([0, 1])
-            //console.log(edgescale(parseInt("160")))
-            // for(var i=0;i<addressArry.length;i++)
-            // {
-            //      console.log(colorscal(addressArry[i]))
-            // }
-           
+          
+            var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             var svg = d3
                 .select("#calendar")
                 .append("svg")
                 .attr("width",width)
                 .attr("height", height);
-                // 勾勒月份的分割线
-                svg
+              //添加星期
+            svg.append("g")
+            .selectAll("text")
+            .data(days)
+            .enter()
+            .append("text")
+            .style("fill", "rgb(170,170,170)")
+            .attr("transform", function(d, i) {
+                if (i <= 6) {
+                return "translate(30," + (cellSize * 3.5 + cellSize / 1.5) + ")";
+                }
+                })
+
+            .attr("font", "10px Microsoft YaHei")
+            .attr("fill", "white")
+            .attr("y", function(d, i) {
+                switch (i) {
+                case 0:
+                    return -4 * cellSize*0.9 ;
+                case 1:
+                    return -3 * cellSize*0.85  ;
+                case 2:
+                    return -2* cellSize *0.8 ;
+                case 3:
+                    return -1*cellSize*0.6 ;
+                case 4:
+                    return 1 * cellSize*0.5 ;
+                case 5:
+                    return 1.5 * cellSize ;
+                case 6:
+                    return 2.5 * cellSize ;
+                }
+                })
+            .text(function(d) {
+                    return d;
+                });
+            // 勾勒月份的分割线
+            svg
                 .append("g")
                 .attr("fill", "none")
                 .attr("stroke", "white")
@@ -119,7 +168,12 @@ export default {
                 })
                 .on("click", function(d) {
                     })
-                .datum(d3.timeFormat("%Y/%m/%d"))
+                .attr("fill","#2b2c2c")
+                .attr("opacity",0.3)
+                .datum(d3.timeFormat("%Y/%m/%d"));
+            rect.append("title").text(function(d){
+                return d;
+            })     
             rect
                .attr("width",function(d){
                    var sd=new Date(d)
@@ -140,12 +194,51 @@ export default {
                         position:{x:(d3.timeWeek.count(d3.timeYear(sd), sd) * cellSize),y:sd.getDay() * cellSize-cellSize},
                         width:70,
                         height:70,
-                        transform: "translate(" + cellSize + "," + 0 + ")"
+                        transform: "translate(" + cellSize + "," + 0 + ")",
+                        class:'allnode'
                    }
                    that.drawForce(fonfig);
                    return cellSize;
                })
-
+            var Dates=new Date(2019,4,1)
+            var Dates2=new Date(2019,3,27)
+            var legend = svg
+                    .append("g")
+                    .attr("class", "legend")
+                    .attr("fill", "none")
+                    .attr("stroke", "white");
+            var checknum=0;
+            var legendcircles = legend
+                    .selectAll("circle")
+                    .data(addressArry)
+                    .enter()
+                    .append("circle")
+                    .attr(
+                        "transform",
+                        "translate(" + cellSize * -12 + "," + 0 + ")"
+                    )
+                    .attr("r",5)
+                    .attr("cx", function(d,i) {
+                        var x=d3.timeWeek.count(d3.timeYear(Dates), Dates) * cellSize+cellSize/5;
+                        var checky=Dates2.getDay()* cellSize+cellSize
+                        var nowy=Dates.getDay() * cellSize+(i+1)*cellSize/5;
+                        if(nowy>checky)
+                           
+                           x=x+cellSize/2
+                        return x;
+                        })
+                    .attr("cy", function(d,i) {
+                        var y=Dates.getDay() * cellSize+(i+1)*cellSize/5;
+                        var checky=Dates2.getDay()* cellSize+cellSize;
+                        if(y>checky)
+                            y-=4*cellSize
+                        return y;
+                    })
+                    .attr("fill", function(d) {
+                        if(d=="学生")
+                            return "white"
+                        return colorscale(d)
+                    }).append("title").text(d=>{return d})
         },
         /*config={
             svg://绘图区域
@@ -189,7 +282,7 @@ export default {
             
             // forceSimulation.nodes(config.nodes)
             // .on("tick",ticked);
-           var svg = config.svg.append("svg").style("position","absolute")
+           var svg = config.svg.append("svg").attr("class",config.class).style("position","absolute")
                 .attr("viewBox", [0, 0, config.width, config.height])
                 .style("left",config.position.x-cellSize*11.95)
                 .style("top",config.position.y+cellSize*1.75)
@@ -197,7 +290,7 @@ export default {
                 .attr("height",config.height);
            var link= svg.append("g")
                         .attr("stroke", "#999")
-                        .attr("stroke-opacity", 0.6)
+                        .attr("stroke-opacity", 0.8)
                         .selectAll("line")
                         .data(config.linkes)
                         .join("line")
