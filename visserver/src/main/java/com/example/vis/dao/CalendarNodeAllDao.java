@@ -10,7 +10,7 @@ import com.example.vis.entitys.CalendarNodeAll;
 public class CalendarNodeAllDao {
 	@SuppressWarnings("unchecked")
 	public <T> List<T> selectAlldate(NamedParameterJdbcTemplate jdbcTemplate){
-		String sqlone="select * from CalendarnodeAll";
+		String sqlone="select * from CalendarnodeAll where Address not like '%食堂%'";
 		BeanPropertyRowMapper<CalendarNodeAll> rowMapper=new BeanPropertyRowMapper<CalendarNodeAll>(CalendarNodeAll.class);
 		List<T> one=(List<T>) jdbcTemplate.query(sqlone, rowMapper);
 		return one.size()>0?one:null;
