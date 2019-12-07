@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <Main></Main>
-    <calendar></calendar>
+    <lineChart></lineChart>
+    <cir></cir>
   </div>
 </template>
 
 <script>
 import Main from '@/components/main'
 import calendar from '@/components/Calendar'
+import lineChart from '@/components/lineChart'
+import cir from '@/components/cir'
 export default {
   name: 'App',
   components:{
-    Main,
-    calendar
+    lineChart,
+    cir
   }
 }
 </script>
@@ -35,6 +37,5 @@ position: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    background-color:  #2b2c2c;
 }
 </style>
