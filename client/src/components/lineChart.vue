@@ -120,9 +120,14 @@ export default {
 };
 </script>
 <style>
+#line_chart{
+     position: absolute;
+     top: 5%;
+     left:40%
+}
 #line_chart .line path{
     fill:none;
-    stroke: blue;
+    stroke: rgb(245, 245, 248);
 }
 #line_chart .circle circle{
     fill: brown;

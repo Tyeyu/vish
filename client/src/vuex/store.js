@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 const store=new Vuex.store({
     state:{
+        Cforcedata:{}
 
     },
     mutations:mutation,

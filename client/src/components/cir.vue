@@ -56,6 +56,9 @@ export default {
 </script>
 <style scoped>
 #cir {
+    position: absolute;
+    top: 40%;
+    left: 40%;
     width: 200px;
     height: 200px;
     border:1px solid black;

@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <Main></Main>
+    <calendar></calendar>
     <lineChart></lineChart>
     <cir></cir>
   </div>
@@ -13,6 +15,8 @@ import cir from '@/components/cir'
 export default {
   name: 'App',
   components:{
+    Main,
+    calendar,
     lineChart,
     cir
   }
@@ -31,11 +35,12 @@ export default {
     user-select:none;
   }
 #app {
-position: fixed;
+    position: fixed;
     width: 100%;
     height: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-}
+    background-color: #191a1a;
+  }
 </style>
