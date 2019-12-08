@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Main></Main>
-    <calendar></calendar>
-    <lineChart></lineChart>
+    <!-- <Main></Main>
+    <calendar></calendar> -->
+    <!-- <lineChart></lineChart> -->
     <cir></cir>
   </div>
 </template>
@@ -27,7 +27,6 @@ export default {
  html,body{
     padding: 0;
     margin: 0;
-    overflow: hidden;
     -moz-user-select:none;/*火狐*/
     -webkit-user-select:none;/*webkit浏览器*/
     -ms-user-select:none;/*IE10*/

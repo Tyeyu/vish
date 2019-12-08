@@ -1,6 +1,5 @@
 <template>
     <div id="line_chart">
-        <g class="line1"></g>
     </div>
     
 </template>
@@ -43,14 +42,12 @@ export default {
             })
         },
         drawLineChart: function() {
-            d3.select("#line_chart").append("div").attr("class","test")
             //折线图
             const svg = d3
                 .select("#line_chart")
                 .append("svg")
                 .attr("width", 650)
-                .attr("height", 350)
-                .style("border", "1px solid black");
+                .attr("height", 350);
             const x = d3.scaleTime()
                 .domain([new Date(2019,3,1),new Date(2019,3,30)])
                 .range([0, 600]);
@@ -65,10 +62,12 @@ export default {
             const yAxis=d3.axisLeft(y);
             svg.append("g")
                 .call(xAxis)
-                .attr("transform", "translate(25,325)");
+                .attr("transform", "translate(25,325)")
+                .attr("class","axis");
             svg.append("g")
                 .call(yAxis)
-                .attr("transform", "translate(25,25)");
+                .attr("transform", "translate(25,25)")
+                .attr("class","axis");
             const line=d3.line()
                 .x(function(d){
                     let time=d.date.split("/");
@@ -102,7 +101,7 @@ export default {
                         .attr("cy",function(d){
                             return y(parseFloat(d.amount)/parseInt(d.number));
                         })
-                        .attr("r",5)
+                        .attr("r",4)
                         .on("mouseover",function(d){
                             d3.select(this).attr("class","choose")
                         })
@@ -125,12 +124,15 @@ export default {
      top: 5%;
      left:40%
 }
+#line_chart *{
+    stroke: aliceblue;
+}
 #line_chart .line path{
     fill:none;
-    stroke: rgb(245, 245, 248);
+    stroke: aliceblue;
 }
 #line_chart .circle circle{
-    fill: brown;
+    fill: aliceblue;
 }
 #line_chart .circle .choose{
     fill: green;
