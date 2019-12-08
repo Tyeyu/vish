@@ -57,7 +57,7 @@ export default {
 <style scoped>
 #cir {
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 40%;
     width: 200px;
     height: 200px;
