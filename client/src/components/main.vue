@@ -1,5 +1,5 @@
 <template>
-<div><P>start</P></div>
+<div><P>Card Vis</P></div>
 </template>
 
 <script>
@@ -84,7 +84,7 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
+p {
   color: #ebf5f0;
 }
 </style>
