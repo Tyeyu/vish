@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <!-- <Main></Main> -->
-    <calendar></calendar>
+    <!-- <calendar></calendar> -->
     <!-- <lineChart></lineChart> -->
     <!-- <cir></cir> -->
+    <bar></bar>
   </div>
 </template>
 
@@ -12,13 +13,16 @@ import Main from '@/components/main'
 import calendar from '@/components/Calendar'
 import lineChart from '@/components/lineChart'
 import cir from '@/components/cir'
+import bar from '@/components/bar'
+
 export default {
   name: 'App',
   components:{
     Main,
     calendar,
     lineChart,
-    cir
+    cir,
+    bar
   }
 }
 </script>

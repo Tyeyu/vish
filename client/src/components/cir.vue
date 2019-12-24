@@ -16,6 +16,7 @@ export default {
     watch: {},
     methods: {
         draw:function(){
+            const me=this;
             for(let j in this.data){
                 let pie=d3.pie().value(d=>{
                     return 1
@@ -23,15 +24,15 @@ export default {
                 var arc_generator = d3.arc()
                     .innerRadius(0)
                     .outerRadius(function(d){
-                        return Math.sqrt(d.data);
+                        return Math.sqrt(d.data)+5;
                     });
                 let svg=d3.select("#cir")
                     .append("svg")
                     .attr("width","90")
                     .attr("height","90");
                 let gs=svg.append("g")
-                    .attr("transform","translate(40,40)")
-                    .selectAll("g")
+                    .attr("transform","translate(40,40)");
+                gs.selectAll("g")
                     .data(pie)
                     .enter()
                     .append("path")
@@ -40,27 +41,57 @@ export default {
                     })
                     .attr("fill",function(d,i){
                         return d3.schemePaired[i%12];
+                    });
+                    gs.on("mouseenter",function(d){
+                        me.highlight(pie,d3.mouse(d3.select("#cir")._groups[0][0]))
                     })
-                    .on("mouseover",function(d,i){
-                        let pos=d3.mouse(this);
-                        d3.select(this.parentNode).append("text")
-                            .text(i+"点:"+d.data)
-                            .attr("transform","translate("+pos[0]+","+pos[1]+")")
-                            .attr("class","tips");
-                    })
-                    .on("mouseout",function(d,i){
-                        d3.select(this.parentNode).selectAll(".tips").remove();
-                    })
+                    .on("mouseleave",function(){
+                        d3.selectAll(".hl").remove();
+                    });
                 svg.append("text")
                     .text(j)
-                    .attr("transform","translate(16,15)")
+                    .attr("transform","translate(0,15)")
                     .attr("fill","white")
             }
         },
+        highlight:function(pie,tr){
+            var arc_generator = d3.arc()
+                .innerRadius(0)
+                .outerRadius(function(d){
+                    return Math.sqrt(d.data)*2;
+                });
+            let svg=d3.select("#cir")
+                .append("svg")
+                .attr("class","hl")
+                .attr("width","200")
+                .attr("height","200")
+                .style("background-color","#5e7987")
+                .style("border","1px solid white")
+                .style("position","absolute")
+                .style("left",tr[0])
+                .style("top",tr[1]);
+            let gs=svg.append("g")
+                    .attr("transform","translate(100,100)");
+                gs.selectAll("g")
+                    .data(pie)
+                    .enter()
+                    .append("path")
+                    .attr("d",function(d){
+                        return arc_generator(d);
+                    })
+                    .attr("fill",function(d,i){
+                        return d3.schemePaired[i%12];
+                    });
+                /* svg.append("text")
+                    .text()
+                    .attr("transform","translate(0,15)")
+                    .attr("fill","white") */
+
+        }
     },
     created() {},
     mounted() {
-        this.axios.get('static/day.json').then(result=>{
+        this.axios.get('static/major.json').then(result=>{
             this.data=result.data;
             this.draw();
         })
@@ -70,7 +101,7 @@ export default {
 </script>
 <style >
 #cir{
-    width: 720px;
+    width: 460px;
 }
 #cir svg{
     border:1px solid white;
