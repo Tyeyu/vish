@@ -202,66 +202,30 @@ export default {
                })
             var Dates=new Date(2019,4,1)
             var Dates2=new Date(2019,3,27)
-            var legend = svg
-                    .append("g")
-                    .attr("class", "legend")
-                    .attr("fill", "none")
-                    .attr("stroke", "white");
-            this.drawSquare(svg);
-            var checknum=0;
-            legend.append("text")
-            .attr("font-size","10px")
-            .attr(
-                        "transform",
-                        "translate(" + ((cellSize * -12)+10) + "," + 0 + ")"
-                    )
-            .attr("x",function(){
-                 var x=d3.timeWeek.count(d3.timeYear(Dates), Dates) * cellSize+cellSize/5;
-                 return x;
-            })
-            .attr("y",function(){
-                var y=Dates.getDay() * cellSize+cellSize/5;
-                return y;
-            })
-            .on("click",function(){
-                var s=d3.select("#calendar .legend").selectAll("circle").attr("opacity",1)
-            })
-            .text("地点");
-            var legendcircles = legend
-                    .selectAll("circle")
-                    .data(addressArry)
-                    .enter()
-                    .append("circle")
-                    .attr("class","legendcircle")
-                    .attr(
-                        "transform",
-                        "translate(" + cellSize * -12 + "," + 0 + ")"
-                    )
-                    .attr("r",5)
-                    .attr("cx", function(d,i) {
-                        var x=d3.timeWeek.count(d3.timeYear(Dates), Dates) * cellSize+cellSize/5;
-                        var checky=Dates2.getDay()* cellSize+cellSize
-                        var nowy=Dates.getDay() * cellSize+(i+1)*cellSize/5;
-                        if(nowy>checky)
-                           
-                           x=x+cellSize/2
-                        return x;
+           
+
+
+            var drawselectrect=d3
+                        .select("#calendar")
+                        .append("svg")
+                        .attr("class","legend")
+                        .attr("width",cellSize*1.3)
+                        .attr("height",cellSize*4.2)
+                        .style("position","absolute")
+                        .style("left",function(){
+                            return (d3.timeWeek.count(d3.timeYear(Dates),Dates) * cellSize)+(cellSize * -12);
                         })
-                    .attr("cy", function(d,i) {
-                        var y=Dates.getDay() * cellSize+(i+1)*cellSize/5;
-                        var checky=Dates2.getDay()* cellSize+cellSize;
-                        if(y>checky)
-                            y-=4*cellSize
-                        return y;
-                    })
-                    .attr("value",function(d,i){
-                        return i;
-                    })
-                    .attr("fill", function(d) {
-                        if(d=="学生")
-                            return "white"
-                        return colorscale(d)
-                    }).append("title").text(d=>{return d})
+                        .style("top",function(){
+                             return Dates.getDay() * cellSize;
+                        })
+                        .style("z-index",1)
+            this.drawSquare(drawselectrect);
+             var legend = drawselectrect
+                    // .append("g")
+                    // .attr("class", "legend")
+                    // .attr("fill", "none")
+                    // .attr("stroke", "white");
+           this.drawForcelend(legend,addressArry,colorscale);
         },
         /*config={
             svg://绘图区域
@@ -353,12 +317,81 @@ export default {
                         .attr("cy", d => d.y);
                     });
         },
+        drawForcelend:function(legend,addressArry,colorscale){
+             var checknum=0;
+            legend.append("text")
+            .attr("font-size","5px Microsoft YaHei").style("fill", "white").attr("x",cellSize/3).attr("y",cellSize/5)
+            // .attr(
+            //             "transform",
+            //             "translate(" + ((cellSize * -12)+10) + "," + 0 + ")"
+            //         )
+            // .attr("x",function(){
+            //      var x=d3.timeWeek.count(d3.timeYear(Dates), Dates) * cellSize+cellSize/5;
+            //      return x;
+            // })
+            // .attr("y",function(){
+            //     var y=Dates.getDay() * cellSize+cellSize/5;
+            //     return y;
+            // })
+            .on("click",function(){
+                var s=d3.select("#calendar .legend").selectAll("circle").attr("opacity",1)
+            })
+            .text("地点");
+            var legendcircles = legend
+                    .selectAll("circle")
+                    .data(addressArry)
+                    .enter()
+                    .append("circle")
+                    .style("z-index",2)
+                    .attr("stroke", "white")
+                    .attr("class","legendcircle")
+                    // .attr(
+                    //     "transform",
+                    //     "translate(" + cellSize * -12 + "," + 0 + ")"
+                    // )
+                    .attr("r",5)
+                    .attr("cx", function(d,i) {
+                        // var x=d3.timeWeek.count(d3.timeYear(Dates), Dates) * cellSize+cellSize/5;
+                        // var checky=Dates2.getDay()* cellSize+cellSize
+                        // var nowy=Dates.getDay() * cellSize+(i+1)*cellSize/5;
+                        // if(nowy>checky)
+                           
+                        //    x=x+cellSize/2
+                        // return x;
+                        var x=cellSize/5;
+                         if(i>19){
+                            x=cellSize/2;
+                        }
+                        return x;
+                        })
+                    .attr("cy", function(d,i) {
+                        // var y=Dates.getDay() * cellSize+(i+1)*cellSize/5;
+                        // var checky=Dates2.getDay()* cellSize+cellSize;
+                        // if(y>checky)
+                        //     y-=4*cellSize
+                        // return y;
+                        var y=(i+1)*cellSize/5;
+                        if(i>19){
+                            y=(i-18)*cellSize/5
+                        }
+                        return y
+                    })
+                    .attr("value",function(d,i){
+                        return i;
+                    })
+                    .attr("fill", function(d) {
+                        if(d=="学生")
+                            return "white"
+                        return colorscale(d)
+                    }).append("title").text(d=>{return d})
+        },
         drawSquare:function(svg){
             var clickTime = "";
             var startLoc = [];
             var endLoc = [];
-            var flag = "";
+            var flag = false;
             var change=0;
+            var move=false;
             var rect = svg.append("rect")
                         .attr("width", 0)
                         .attr("height", 0)
@@ -367,43 +400,58 @@ export default {
                         .attr("stroke-width", "2px")
                         .attr("transform", "translate(0,0)")
                         .attr("id", "squareSelect");
-
+            svg.on("click",function(){
+                 change=0;
+                 flag = false;
+            })
             svg.on("mousedown", function() {
                
                     clickTime = (new Date()).getTime();//mark start time
-                   flag = true;//以flag作为可执行圈选的标记
+                    flag = true;//以flag作为可执行圈选的标记
                     rect.attr("transform", "translate(" + d3.event.layerX + "," + d3.event.layerY + ")");
-                    startLoc = [d3.event.pageX, d3.event.pageY];
-                    console.log("sss"+startLoc)
+                    startLoc = [d3.event.layerX, d3.event.layerY];
+                    console.log("mousedown",move)
+                    change=0;
                 });
 
             svg.on("mousemove", function() {
+              
                 if(flag){
                      change=1;
+                    
+                }else{
+                     change=0;
                 }
                  
             //判断事件target
-                    if (d3.event.target.localName == "svg" && flag == true || d3.event.target.localName == "rect" && flag == true) {
-
-                        var width = d3.event.pageX - startLoc[0];
-                        var height = d3.event.pageY - startLoc[1];
+                    if (d3.event.target.localName == "svg" && flag == true || d3.event.target.localName == "circle" && flag == true) {
+                        move=true;
+                        
+                        var width = d3.event.layerX - startLoc[0];
+                        var height = d3.event.layerY - startLoc[1];
                         if (width < 0) {
-                            rect.attr("transform", "translate(" + d3.event.pageX + "," + startLoc[1] + ")");
+                            rect.attr("transform", "translate(" + d3.event.layerX + "," + startLoc[1] + ")");
                         }
                         if (height < 0) {
-                            rect.attr("transform", "translate(" + startLoc[0] + "," + d3.event.pageY + ")");
+                            rect.attr("transform", "translate(" + startLoc[0] + "," + d3.event.layerY + ")");
                          }
                         if (height < 0 && width < 0) {
-                            rect.attr("transform", "translate(" + d3.event.pageX + "," + d3.event.pageY + ")");
+                            rect.attr("transform", "translate(" + d3.event.layerX + "," + d3.event.layerY + ")");
                         }
                         rect.attr("width", Math.abs(width)).attr("height", Math.abs(height))
                     }
                     })
 
             svg.on("mouseup", function(){
+                console.log(flag)
+                console.log("move",move)
+                if(!move){
+                    flag=false;
+                    change=0;
+                }
                 if(flag == true){
                         flag = false;
-                        endLoc = [d3.event.pageX, d3.event.pageY];
+                        endLoc = [d3.event.layerX, d3.event.layerY];
                        
                         var leftTop = [];
                         var rightBottom = []
@@ -421,30 +469,38 @@ export default {
                     leftTop[1] = endLoc[1];
                     rightBottom[1] = startLoc[1];
                 }
-                if(change==1){
+                var times = (new Date()).getTime()-clickTime;
+                console.log(times)
+                if(change==1&&move&&times>200){
+                    console.log(change)
                        //最后通过和node的坐标比较，确定哪些点在圈选范围
-                var nodes = d3.selectAll(".legendcircle").attr("temp", function(d,i){
+                    var nodes = d3.selectAll(".legendcircle").attr("temp", function(d,i){
                    
-                    var cx=(Number(d3.select(this).attr("cx"))+cellSize * -12)*2
+                    var cx=Number(d3.select(this).attr("cx"))
                     var cy=Number(d3.select(this).attr("cy"))
-                    // console.log(cx+","+cy);
-                    // console.log(rightBottom)
-                    // console.log(leftTop)
+                    // if(i>19){
+                    //     cx-=(cellSize/2);
+                    // }
                     if(cx<rightBottom[0] && cx>leftTop[0] && cy>leftTop[1] && cy<rightBottom[1]){
                         // console.log("sesesez")
                             d3.select(this).attr("opacity",1);
                     }
                     else{
                         var times = (new Date()).getTime()-clickTime;
-                        console.log(times)
-                        if (times>=100) {
+                       
+                        if (times>=100&&i!=0) {
                            d3.select(this).attr("opacity",0.1);
                         }
                          
                     }
-                    change=0
+                    change=0;
+                  
+                    move=false;
                 })
-                }
+                change=0;
+                flag = false;
+                move=false;
+            }
                
                 rect.attr("width",0).attr("height",0);
             }
