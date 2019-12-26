@@ -5,10 +5,13 @@ import action from "./action";
 import getter from "./getter";
 Vue.use(Vuex);
 
-const store=new Vuex.store({
+const store=new Vuex.Store({
     state:{
-        Cforcedata:{}
-
+        Cforcedata:{},
+        forcelegend:"",
+        forceSvg:"",
+        forceColorScale:"",
+        forceedgescale:""
     },
     mutations:mutation,
     actions:action,

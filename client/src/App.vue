@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <!-- <Main></Main> -->
-    <!-- <calendar></calendar> -->
-    <lineChart></lineChart>
+    <calendar></calendar>
+    <!-- <lineChart></lineChart> -->
     <!-- <cir></cir> -->
     <!-- <bar></bar> -->
   </div>
