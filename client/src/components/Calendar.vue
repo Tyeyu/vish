@@ -56,7 +56,11 @@ export default {
                 addranges[i+1]=i+1
             }
             //保存地点数据
-            this.$store.commit('forcelegend_state',addressArry)
+            var mapL=d3.map();
+            for(var i in addressArry){
+                mapL.set(addressArry[i],1)
+            }
+            this.$store.commit('forcelegend_state',mapL)
 
             var scaleOrdinal = d3.scaleOrdinal()
                                 .domain(addressArry)
@@ -220,15 +224,12 @@ export default {
        Force:function(){
             var rect=this.$store.getters.getforceSvg;
             var datesMap=this.$store.getters.getCforcedata;
-            var legends=this.$store.getters.getforcelegend;
+           
             var colorscale=this.$store.getters.getforceColorScale;
             var edgescale=this.$store.getters.getforceedgescale;
             var that=this;
-            var map=d3.map();
-            for(var i in legends){
-                map.set(legends[i],1)
-            }
-            console.log(map)
+            var map=this.$store.getters.getforcelegend;
+            // console.log(map)
             d3.select("#calendar").selectAll('.allnode').remove();
             rect
                .attr("width",function(d){
@@ -427,7 +428,30 @@ export default {
                         if(d=="学生")
                             return "white"
                         return colorscale(d)
-                    }).append("title").text(d=>{return d})
+                    })
+                    .attr("opacity",1)
+                    .on("click",function(d){
+                        if(d=="学生")
+                            return;
+                        var value=d3.select(this).attr("opacity");
+                        let lend=that.$store.getters.getforcelegend;
+                        if(value!=1){
+                           
+                            lend.set(d,1);
+                            d3.select(this).attr("opacity",1);
+                            that.$store.state.forcelegend=lend;
+                            that.Force();
+                        }
+                        else{
+                            lend.remove(d);
+                            d3.select(this).attr("opacity",0.1);
+                            that.$store.state.forcelegend=lend;
+                            that.Force();
+                        }
+                      
+                        // console.log(value)
+                    })
+                    .append("title").text(d=>{return d})
         },
         drawSquare:function(svg){
             var clickTime = "";
@@ -551,7 +575,11 @@ export default {
                     change=0;
                     flag = false;
                     move=false;
-                    that.$store.commit("forcelegend_state",lend);
+                    var mapL=d3.map();
+                    for(var i in lend){
+                        mapL.set(lend[i],1);
+                    }
+                    that.$store.commit("forcelegend_state",mapL);
                 }
                
                 rect.attr("width",0).attr("height",0);
@@ -572,6 +600,7 @@ export default {
    
     watch:{
        '$store.state.forcelegend':function(newdata,olddata){
+           console.log(newdata)
            if(olddata!=null){
                this.Force();
            }
