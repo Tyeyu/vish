@@ -3,6 +3,7 @@
     <!-- <Main></Main> -->
     <control ></control>
     <calendar></calendar>
+    <downpage></downpage>
     <!-- <lineChart></lineChart> -->
     <!-- <cir></cir> -->
     <!-- <bar></bar> -->
@@ -16,6 +17,7 @@ import lineChart from '@/components/lineChart'
 import cir from '@/components/cir'
 import bar from '@/components/bar'
 import control from'@/components/Control'
+import downpage from "@/components/downpage"
 export default {
   name: 'App',
   components:{
@@ -24,7 +26,8 @@ export default {
     lineChart,
     cir,
     bar,
-    control 
+    control,
+    downpage
   }
 }
 </script>

@@ -56,10 +56,8 @@ export default {
                 addranges[i+1]=i+1
             }
             //保存地点数据
-            var mapL=d3.map();
-            for(var i in addressArry){
-                mapL.set(addressArry[i],1)
-            }
+            var mapL=null;
+            mapL=this.saveLendmap(addressArry)
             this.$store.commit('forcelegend_state',mapL)
 
             var scaleOrdinal = d3.scaleOrdinal()
@@ -226,9 +224,31 @@ export default {
             var datesMap=this.$store.getters.getCforcedata;
            
             var colorscale=this.$store.getters.getforceColorScale;
-            var edgescale=this.$store.getters.getforceedgescale;
+            // var edgescale=this.$store.getters.getforceedgescale;
             var that=this;
             var map=this.$store.getters.getforcelegend;
+            var keys=map.keys()
+           
+            var datesmapkeys=datesMap.keys();
+            var edgeScalearry=[]
+            var e=0;
+            for(var j=0;j<datesmapkeys.length;j++){
+                var ks=datesMap.get(datesmapkeys[j])
+                for(var k=0;k<ks.length;k++){
+                    
+                    if(map.get(ks[k].address)==1){
+                        edgeScalearry[e]=ks[k].count;
+                        e++;
+                    }
+                }
+            }
+            var edgescale=d3.scaleLinear()
+            .domain([d3.min(edgeScalearry,function(d){
+                return parseInt(d)
+            }), d3.max(edgeScalearry,function(d){
+                return parseInt(d)
+            })])
+            .range([0, 1])
             // console.log(map)
             d3.select("#calendar").selectAll('.allnode').remove();
             rect
@@ -379,7 +399,8 @@ export default {
                     lend[i]=d;
                     return 1;
                 })
-                that.$store.commit("forcelegend_state",lend);
+
+                that.$store.commit("forcelegend_state",that.saveLendmap(lend));
             })
             .text("地点");
             var legendcircles = legend
@@ -591,6 +612,13 @@ export default {
 
         })
 
+        },
+        saveLendmap:function(data){
+            var mapL=d3.map();
+            for(var i in data){
+                mapL.set(data[i],1)
+            }
+            return mapL;
         }
     },
     mounted() {
@@ -641,7 +669,7 @@ function pathMonth(t0) {
 <style>
 #calendar{
     position:absolute;
-    left: 30%;
+    left: 15%;
     top: 1%;
 }
  .information h3 {
