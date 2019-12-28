@@ -43,15 +43,23 @@ export default {
                 }
             var addressNets=d3.nest()
                         .key(function(d) { return d.address; })
-                        .entries(drawdata)
-          
-            let addressArry=['学生']
+                        .entries(drawdata);
+            //将力导向图数据保存            
+           
+            this.$store.commit('forcedata_state',datesMap)
+           
+            var addressArry=['学生']
             let addranges=[0]
             for(var i=0;i<addressNets.length;i++){
                 addressArry[i+1]=addressNets[i].key
                 // addranges[i+1]=(i+1)/addressNets.length
                 addranges[i+1]=i+1
             }
+            //保存地点数据
+            var mapL=null;
+            mapL=this.saveLendmap(addressArry)
+            this.$store.commit('forcelegend_state',mapL)
+
             var scaleOrdinal = d3.scaleOrdinal()
                                 .domain(addressArry)
                                 .range(addranges);
@@ -74,6 +82,9 @@ export default {
                 return colors[value]
                 
             }
+
+            this.$store.commit('forceColorScale_state',colorscale);
+
             var edgescale=d3.scaleLinear()
             .domain([d3.min(drawdata,function(d){
                 return parseInt(d.count)
@@ -82,6 +93,8 @@ export default {
             })])
             .range([0, 1])
           
+            this.$store.commit('forceedgescale_state',edgescale);
+
             var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             var svg = d3
                 .select("#calendar")
@@ -174,32 +187,7 @@ export default {
             rect.append("title").text(function(d){
                 return d;
             })     
-            rect
-               .attr("width",function(d){
-                   var sd=new Date(d)
-                   var s=sd.getFullYear()+"/"+(sd.getMonth()+1)+"/"+sd.getDate();
-                   var thisdate=datesMap.get(s)
-                   var nodes=[{id:"学生",group:2}]
-                   var linkes=[{source:"学生",target:"学生",value:1}]
-                   for(var i=0;i<thisdate.length;i++){
-                       nodes[i+1]={id:thisdate[i].address,group:1};
-                       linkes[i]={source:"学生",target:thisdate[i].address,value:parseInt(thisdate[i].count)}
-                   }
-                   var fonfig={
-                        svg:d3.select("#calendar"),
-                        nodes:nodes,
-                        linkes:linkes,
-                        colorscale:colorscale,
-                        edgescale:edgescale,
-                        position:{x:(d3.timeWeek.count(d3.timeYear(sd), sd) * cellSize),y:sd.getDay() * cellSize-1.7*cellSize},
-                        width:70,
-                        height:70,
-                        transform: "translate(" + cellSize + "," + 0 + ")",
-                        class:'allnode'
-                   }
-                   that.drawForce(fonfig);
-                   return cellSize;
-               })
+           
             var Dates=new Date(2019,4,1)
             var Dates2=new Date(2019,3,27)
            
@@ -225,8 +213,79 @@ export default {
                     // .attr("class", "legend")
                     // .attr("fill", "none")
                     // .attr("stroke", "white");
-           this.drawForcelend(legend,addressArry,colorscale);
+            this.drawForcelend(legend,addressArry,colorscale);
+            this.$store.commit("forceSvg_state",rect);
+            this.Force();
+           
         },
+       
+       Force:function(){
+            var rect=this.$store.getters.getforceSvg;
+            var datesMap=this.$store.getters.getCforcedata;
+           
+            var colorscale=this.$store.getters.getforceColorScale;
+            // var edgescale=this.$store.getters.getforceedgescale;
+            var that=this;
+            var map=this.$store.getters.getforcelegend;
+            var keys=map.keys()
+           
+            var datesmapkeys=datesMap.keys();
+            var edgeScalearry=[]
+            var e=0;
+            for(var j=0;j<datesmapkeys.length;j++){
+                var ks=datesMap.get(datesmapkeys[j])
+                for(var k=0;k<ks.length;k++){
+                    
+                    if(map.get(ks[k].address)==1){
+                        edgeScalearry[e]=ks[k].count;
+                        e++;
+                    }
+                }
+            }
+            var edgescale=d3.scaleLinear()
+            .domain([d3.min(edgeScalearry,function(d){
+                return parseInt(d)
+            }), d3.max(edgeScalearry,function(d){
+                return parseInt(d)
+            })])
+            .range([0, 1])
+            // console.log(map)
+            d3.select("#calendar").selectAll('.allnode').remove();
+            rect
+               .attr("width",function(d){
+                   var sd=new Date(d)
+                   var s=sd.getFullYear()+"/"+(sd.getMonth()+1)+"/"+sd.getDate();
+                   var thisdate=datesMap.get(s)
+                   var nodes=[{id:"学生",group:2}]
+                   var linkes=[{source:"学生",target:"学生",value:1}]
+                   var j=0;
+                   for(var i=0;i<thisdate.length;i++){
+                       
+                       if(map.get(thisdate[i].address)==1)
+                       {
+                        nodes[j+1]={id:thisdate[i].address,group:1};
+                        linkes[j]={source:"学生",target:thisdate[i].address,value:parseInt(thisdate[i].count)}
+                        j+=1;
+                       }
+                      
+                   }
+                   var fonfig={
+                        svg:d3.select("#calendar"),
+                        nodes:nodes,
+                        linkes:linkes,
+                        colorscale:colorscale,
+                        edgescale:edgescale,
+                        position:{x:(d3.timeWeek.count(d3.timeYear(sd), sd) * cellSize),y:sd.getDay() * cellSize-1.7*cellSize},
+                        width:70,
+                        height:70,
+                        transform: "translate(" + cellSize + "," + 0 + ")",
+                        class:'allnode'
+                   }
+                  
+                   that.drawForce(fonfig);
+                   return cellSize;
+               })
+       },
         /*config={
             svg://绘图区域
             nodes://节点数据
@@ -319,6 +378,7 @@ export default {
         },
         drawForcelend:function(legend,addressArry,colorscale){
              var checknum=0;
+             var that=this;
             legend.append("text")
             .attr("font-size","5px Microsoft YaHei").style("fill", "white").attr("x",cellSize/3).attr("y",cellSize/5)
             // .attr(
@@ -334,7 +394,13 @@ export default {
             //     return y;
             // })
             .on("click",function(){
-                var s=d3.select("#calendar .legend").selectAll("circle").attr("opacity",1)
+                var lend=[];
+                var s=d3.select("#calendar .legend").selectAll("circle").attr("opacity",function(d,i){
+                    lend[i]=d;
+                    return 1;
+                })
+
+                that.$store.commit("forcelegend_state",that.saveLendmap(lend));
             })
             .text("地点");
             var legendcircles = legend
@@ -383,7 +449,30 @@ export default {
                         if(d=="学生")
                             return "white"
                         return colorscale(d)
-                    }).append("title").text(d=>{return d})
+                    })
+                    .attr("opacity",1)
+                    .on("click",function(d){
+                        if(d=="学生")
+                            return;
+                        var value=d3.select(this).attr("opacity");
+                        let lend=that.$store.getters.getforcelegend;
+                        if(value!=1){
+                           
+                            lend.set(d,1);
+                            d3.select(this).attr("opacity",1);
+                            that.$store.state.forcelegend=lend;
+                            that.Force();
+                        }
+                        else{
+                            lend.remove(d);
+                            d3.select(this).attr("opacity",0.1);
+                            that.$store.state.forcelegend=lend;
+                            that.Force();
+                        }
+                      
+                        // console.log(value)
+                    })
+                    .append("title").text(d=>{return d})
         },
         drawSquare:function(svg){
             var clickTime = "";
@@ -392,6 +481,7 @@ export default {
             var flag = false;
             var change=0;
             var move=false;
+            var that=this;
             var rect = svg.append("rect")
                         .attr("width", 0)
                         .attr("height", 0)
@@ -410,7 +500,7 @@ export default {
                     flag = true;//以flag作为可执行圈选的标记
                     rect.attr("transform", "translate(" + d3.event.layerX + "," + d3.event.layerY + ")");
                     startLoc = [d3.event.layerX, d3.event.layerY];
-                    console.log("mousedown",move)
+                   
                     change=0;
                 });
 
@@ -443,8 +533,7 @@ export default {
                     })
 
             svg.on("mouseup", function(){
-                console.log(flag)
-                console.log("move",move)
+               
                 if(!move){
                     flag=false;
                     change=0;
@@ -470,10 +559,12 @@ export default {
                     rightBottom[1] = startLoc[1];
                 }
                 var times = (new Date()).getTime()-clickTime;
-                console.log(times)
+               
                 if(change==1&&move&&times>200){
-                    console.log(change)
+                    
                        //最后通过和node的坐标比较，确定哪些点在圈选范围
+                    var lend=["学生"]
+                    var j=1;
                     var nodes = d3.selectAll(".legendcircle").attr("temp", function(d,i){
                    
                     var cx=Number(d3.select(this).attr("cx"))
@@ -484,6 +575,10 @@ export default {
                     if(cx<rightBottom[0] && cx>leftTop[0] && cy>leftTop[1] && cy<rightBottom[1]){
                         // console.log("sesesez")
                             d3.select(this).attr("opacity",1);
+                            if(i!=0){
+                                lend[j]=d;
+                                j+=1;
+                            }
                     }
                     else{
                         var times = (new Date()).getTime()-clickTime;
@@ -496,11 +591,17 @@ export default {
                     change=0;
                   
                     move=false;
-                })
-                change=0;
-                flag = false;
-                move=false;
-            }
+                    
+                    })
+                    change=0;
+                    flag = false;
+                    move=false;
+                    var mapL=d3.map();
+                    for(var i in lend){
+                        mapL.set(lend[i],1);
+                    }
+                    that.$store.commit("forcelegend_state",mapL);
+                }
                
                 rect.attr("width",0).attr("height",0);
             }
@@ -511,11 +612,27 @@ export default {
 
         })
 
+        },
+        saveLendmap:function(data){
+            var mapL=d3.map();
+            for(var i in data){
+                mapL.set(data[i],1)
+            }
+            return mapL;
         }
     },
     mounted() {
     //   this.drawCalendar()
       this.CalendarAllNodedata()
+    },
+   
+    watch:{
+       '$store.state.forcelegend':function(newdata,olddata){
+           console.log(newdata)
+           if(olddata!=null){
+               this.Force();
+           }
+       }
     }
 
 }
@@ -552,7 +669,7 @@ function pathMonth(t0) {
 <style>
 #calendar{
     position:absolute;
-    left: 30%;
+    left: 15%;
     top: 1%;
 }
  .information h3 {

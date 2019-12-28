@@ -76,7 +76,7 @@ export default {
                     });
             svg.append("text")
                 .text("18软件技术")
-                .attr("transform","translate(10,30)")
+                .attr("transform","translate(0,13)")
                 .attr("style","font-weight:100")
                 .attr("style","font-size:15px")
         }
@@ -92,6 +92,8 @@ export default {
     width: 300px;
     height: 300px;
     position: absolute;
-    left: 800px;
+    left: calc(2% + 610px);
+    top: calc(2% + 580px);
+    z-index: 2;
 }
 </style>

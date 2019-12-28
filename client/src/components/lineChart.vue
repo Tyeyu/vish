@@ -117,7 +117,7 @@ export default {
             svg.append("text")
                 .attr("x",40)
                 .attr("y",15)
-                .text("xx专业日平均消费金额")
+                .text("日平均消费金额")
                 .style("font-size","15px")
         }
     },
@@ -131,7 +131,7 @@ export default {
 #line_chart{
      position: absolute;
      top: 1%;
-     left:250px;
+     left:720px;
      width: 550px;
      height: 300px;
 }

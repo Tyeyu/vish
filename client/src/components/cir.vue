@@ -91,7 +91,7 @@ export default {
     },
     created() {},
     mounted() {
-        this.axios.get('static/major.json').then(result=>{
+        this.axios.get('static/day.json').then(result=>{
             this.data=result.data;
             this.draw();
         })

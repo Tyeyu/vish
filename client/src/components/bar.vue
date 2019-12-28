@@ -22,25 +22,26 @@ export default {
             })
         },
         draw:function(){
+            let yindex=0,xindex=0;
             const me = this;
             const x = d3.scaleLinear()
                 .domain([0,200])
                 .range([0, 150]);
             const svg=d3.select("#bar")
                 .append("svg")
-                .attr("width","250")
-                .attr("height","720");
+                .attr("width","650")
+                .attr("height","300");
             let gs=svg.append("g")
                 .selectAll(".con")
                 .data(this.stu)
                 .enter()
                 .append("g")
-                .attr("transform","translate(100,20)");
+                .attr("transform",function(d,i){
+                    return "translate("+(parseInt(i/14)*180+100)+","+((i%14)*17+20)+")";
+                });
             gs.append("rect")
                 .attr("x","0")
-                .attr("y",function(d,i){
-                    return 17*i;
-                })
+                .attr("y","0")
                 .attr("width",function(d,i){
                     return x(d.male+d.female)
                 })
@@ -59,9 +60,7 @@ export default {
                 });
             gs.append("rect")
                 .attr("x","0")
-                .attr("y",function(d,i){
-                    return 17*i;
-                })
+                .attr("y","0")
                 .attr("width",function(d,i){
                     return x(d.rate[0]+d.rate[1]);
                 })
@@ -81,7 +80,8 @@ export default {
                     return d.major;
                 })
                 .attr("transform",function(d,i){
-                    return "translate("+0+","+(i*17+33)+")";
+                    //return "translate("+0+","+(i*17+33)+")";
+                    return "translate("+(parseInt(i/14)*190)+","+((i%14)*17+33)+")";
                 })
                 .on("mouseover",function(){
                     d3.select(this)
@@ -98,9 +98,7 @@ export default {
         addfun:function(gs,x,me){
             gs.append("rect")
                 .attr("x","0")
-                .attr("y",function(d,i){
-                    return 17*i;
-                })
+                .attr("y","0")
                 .transition()
                 .duration(800)
                 .attr("width",function(d,i){
@@ -116,9 +114,7 @@ export default {
                 .attr("x",function(d,i){
                     return x(d.male)+5;
                 })
-                .attr("y",function(d,i){
-                    return 17*i;
-                })
+                .attr("y","0")
                 .transition()
                 .duration(800)
                 .attr("width",function(d,i){
@@ -130,9 +126,7 @@ export default {
                 .style("cursor","pointer");
             gs.append("rect")
                 .attr("x","0")
-                .attr("y",function(d,i){
-                    return 17*i;
-                })
+                .attr("y","0")
                 .transition()
                 .duration(800)
                 .attr("width",function(d,i){
@@ -144,9 +138,7 @@ export default {
                 .attr("x",function(d,i){
                     return x(d.male)+5;
                 })
-                .attr("y",function(d,i){
-                    return 17*i;
-                })
+                .attr("y","0")
                 .transition()
                 .duration(800)
                 .attr("width",function(d,i){
@@ -165,9 +157,12 @@ export default {
 <style>
 #bar{
     width: 250px;
-    height: 720px;
+    height: 300px;
     position: absolute;
-    top: 1%;
+    top: calc(2% + 580px);
+    left: 1%;
+    z-index: 2;
+    
 }
 #bar text{
     font-weight: 100;

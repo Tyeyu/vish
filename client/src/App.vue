@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <!-- <Main></Main> -->
+    <control ></control>
     <!-- <calendar></calendar> -->
+    <rose></rose>
+    <downpage></downpage>
     <lineChart></lineChart>
-    <!-- <cir></cir> -->
     <bar></bar>
     <pie></pie>
   </div>
@@ -16,7 +18,9 @@ import lineChart from '@/components/lineChart'
 import cir from '@/components/cir'
 import bar from '@/components/bar'
 import pie from '@/components/pie'
-
+import rose from '@/components/rose'
+import control from'@/components/Control'
+import downpage from "@/components/downpage"
 export default {
   name: 'App',
   components:{
@@ -25,7 +29,10 @@ export default {
     lineChart,
     cir,
     bar,
-    pie
+    pie,
+    control,
+    downpage,
+    rose
   }
 }
 </script>
