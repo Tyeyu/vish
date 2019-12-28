@@ -1,7 +1,6 @@
 <template>
     <div id="line_chart">
     </div>
-    
 </template>
 
 <script>
@@ -19,7 +18,6 @@ export default {
     methods: {
         getData:function(){
             this.axios.get('/static/ave_consum.json').then((result)=>{
-                console.log(result.data)
                 this.lines=result.data;
                 this.drawLineChart();
             })
@@ -29,14 +27,14 @@ export default {
             const svg = d3
                 .select("#line_chart")
                 .append("svg")
-                .attr("width", 650)
-                .attr("height", 350);
+                .attr("width", 550)
+                .attr("height", 300);
             const x = d3.scaleLinear()
                 .domain([0,29])
-                .range([0, 600]);
+                .range([0, 500]);
             const y = d3.scaleLinear()
-                .domain([8,20])
-                .range([300, 0]);
+                .domain([6,20])
+                .range([250, 0]);
             const xAxis = d3.axisBottom(x)
                 .ticks(30)
                 .tickFormat((d)=>{
@@ -46,7 +44,7 @@ export default {
             //坐标轴
             svg.append("g")
                 .call(xAxis)
-                .attr("transform", "translate(25,325)")
+                .attr("transform", "translate(25,275)")
                 .attr("class","axis");
             svg.append("g")
                 .call(yAxis)
@@ -73,7 +71,7 @@ export default {
                         .attr("d",line(data.slice(0,27)));
                 gs.append("g")
                     .attr("class","line")
-                    .attr("transform","translate(580,0)")
+                    .attr("transform","translate(480,0)")
                     .append("path")
                         .attr("d",line(data.slice(28,30)));
                 gs.selectAll("circle")
@@ -99,26 +97,27 @@ export default {
                 .attr("class",function(d){return Object.keys(d)[0]});
             
             legend.append("line")
-                .attr("x1",585)
+                .attr("x1",485)
                 .attr("y1",function(d,i){return i*15+10})
-                .attr("x2",615)
+                .attr("x2",515)
                 .attr("y2",function(d,i){return i*15+10});
             legend.append("circle")
-                .attr("cx",600)
+                .attr("cx",500)
                 .attr("cy",function(d,i){
                     return i*15+10;
                 })
                 .attr("r",4);
             legend.append("text")
-                .attr("x",625)
+                .attr("x",525)
                 .attr("y",function(d,i){return i*15+13})
                 .text(function(d){
                     return d[Object.keys(d)[0]]
                 })
+            //title
             svg.append("text")
                 .attr("x",40)
                 .attr("y",15)
-                .text("日平均消费折线图")
+                .text("xx专业日平均消费金额")
                 .style("font-size","15px")
         }
     },
@@ -131,16 +130,18 @@ export default {
 <style>
 #line_chart{
      position: absolute;
-     top: 5%;
-     left:5%
+     top: 1%;
+     left:250px;
+     width: 550px;
+     height: 300px;
 }
-#line_chart *{
-    stroke: aliceblue;
+#line_chart line{
+    stroke: DimGray;
 }
 #line_chart .line path{
     fill:none;
     stroke-width: 1.5px;
-    stroke: aliceblue;
+    stroke: DimGray;
 }
 #line_chart text{
     font-size: 10px;
@@ -150,12 +151,12 @@ export default {
     cursor: pointer;
 }
 #line_chart .boy{
-    fill: aqua;
+    fill: #1E90FF;
 }
 #line_chart .girl{
-    fill: chocolate;
+    fill:Tomato;
 }
 #line_chart .ave{
-    fill:cornsilk;
+    fill:Black;
 }
 </style>

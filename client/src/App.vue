@@ -4,7 +4,8 @@
     <!-- <calendar></calendar> -->
     <lineChart></lineChart>
     <!-- <cir></cir> -->
-    <!-- <bar></bar> -->
+    <bar></bar>
+    <pie></pie>
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import calendar from '@/components/Calendar'
 import lineChart from '@/components/lineChart'
 import cir from '@/components/cir'
 import bar from '@/components/bar'
+import pie from '@/components/pie'
 
 export default {
   name: 'App',
@@ -22,7 +24,8 @@ export default {
     calendar,
     lineChart,
     cir,
-    bar
+    bar,
+    pie
   }
 }
 </script>
@@ -44,6 +47,6 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    background-color: #191a1a;
+    /* background-color: #191a1a; */
   }
 </style>

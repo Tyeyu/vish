@@ -9,123 +9,70 @@ export default {
     components: {},
     data() {
         return {
-            color1:["#2775b6","#f26b1f"]
+            color1:["#1E90FF","Tomato"]
         };
     },
     computed: {},
     watch: {},
     methods: {
         getData:function(){
-            this.axios.get("static/stu_info.json").then((data)=>{
+            this.axios.get("static/consume_rate.json").then((data)=>{
                 this.stu=data.data.data;
-                this.draw2();
+                this.draw();
             })
         },
-        draw2:function(){
+        draw:function(){
             const me = this;
             const x = d3.scaleLinear()
                 .domain([0,200])
                 .range([0, 150]);
             const svg=d3.select("#bar")
                 .append("svg")
-                .attr("width","650")
-                .attr("height","700");
-            for(let index=0;index<3;index++){
-                let gs=svg.append("g")
-                    .attr("transform","translate("+index*155+",0)")
-                    .selectAll(".con")
-                    .data(this.stu)
-                    .enter()
-                    .append("g")
-                    .attr("transform","translate(100,0)")
-                gs.append("rect")
-                    .attr("x","0")
-                    .attr("y",function(d,i){
-                        return 17*i;
-                    })
-                    .attr("width",function(d,i){
-                        return x(d.male+d.female)
-                    })
-                    .attr("height","15")
-                    .attr("fill","#2775b6")
-                    .attr("fill-opacity","0.4")
-                    .style("cursor","pointer")
-                    .on("click",function(){
-                        gs.selectAll("rect")
-                            .transition()
-                            .duration(500)
-                            .attr("width","0")
-                            .remove();
-                        gs.append("rect")
-                            .attr("x","0")
-                            .attr("y",function(d,i){
-                                return 17*i;
-                            })
-                            .transition()
-                            .duration(800)
-                            .attr("width",function(d,i){
-                                return x(d.male)
-                            })
-                            .attr("height","15")
-                            .attr("fill","#2775b6")
-                            .attr("fill-opacity","0.4")
-                            .style("cursor","pointer");
-                        gs.append("rect")
-                            .attr("x",function(d,i){
-                                return x(d.male)+5;
-                            })
-                            .attr("y",function(d,i){
-                                return 17*i;
-                            })
-                            .transition()
-                            .duration(800)
-                            .attr("width",function(d,i){
-                                return x(d.female);
-                            })
-                            .attr("height","15")
-                            .attr("fill","#f26b1f")
-                            .attr("fill-opacity","0.4")
-                            .style("cursor","pointer");
-                        gs.append("rect")
-                            .attr("x","0")
-                            .attr("y",function(d,i){
-                                return 17*i;
-                            })
-                            .transition()
-                            .duration(800)
-                            .attr("width",function(d,i){
-                                return x(d.arr[index*2])
-                            })
-                            .attr("height","15")
-                            .attr("fill","#2775b6")
-                            .style("cursor","pointer");
-                        gs.append("rect")
-                            .attr("x",function(d,i){
-                                return x(d.male)+5;
-                            })
-                            .attr("y",function(d,i){
-                                return 17*i;
-                            })
-                            .transition()
-                            .duration(800)
-                            .attr("width",function(d,i){
-                                return x(d.arr[index*2+1])
-                            })
-                            .attr("height","15")
-                            .attr("fill","#f26b1f")
-                            .style("cursor","pointer");
-                    });
-                gs.append("rect")
-                    .attr("x","0")
-                    .attr("y",function(d,i){
-                        return 17*i;
-                    })
-                    .attr("width",function(d,i){
-                        return x(d.arr[index*2]+d.arr[index*2+1])
-                    })
-                    .attr("height","15")
-                    .attr("fill","#2775b6");
-            }
+                .attr("width","250")
+                .attr("height","720");
+            let gs=svg.append("g")
+                .selectAll(".con")
+                .data(this.stu)
+                .enter()
+                .append("g")
+                .attr("transform","translate(100,20)");
+            gs.append("rect")
+                .attr("x","0")
+                .attr("y",function(d,i){
+                    return 17*i;
+                })
+                .attr("width",function(d,i){
+                    return x(d.male+d.female)
+                })
+                .attr("height","15")
+                .attr("fill",me.color1[0])
+                .attr("fill-opacity","0.4")
+                .style("cursor","pointer")
+                .on("click",function(){
+                    gs.selectAll("rect")
+                        .transition()
+                        .duration(500)
+                        .attr("width","0")
+                        .remove();
+                    //点击事件
+                    me.addfun(gs,x,me);
+                });
+            gs.append("rect")
+                .attr("x","0")
+                .attr("y",function(d,i){
+                    return 17*i;
+                })
+                .attr("width",function(d,i){
+                    return x(d.rate[0]+d.rate[1]);
+                })
+                .attr("height","15")
+                .attr("fill",me.color1[0])
+                .attr("fill-opacity","1");
+            //图例
+            svg.append("text")
+                .text("日平均消费人数")
+                .attr("transform","translate(0,13)")
+                .attr("style","font-size:15px")
             svg.selectAll(".t")
                 .data(this.stu)
                 .enter()
@@ -134,54 +81,80 @@ export default {
                     return d.major;
                 })
                 .attr("transform",function(d,i){
-                    return "translate("+0+","+(i*17+13)+")";
+                    return "translate("+0+","+(i*17+33)+")";
                 })
-                .style("font-size","12px");
+                .on("mouseover",function(){
+                    d3.select(this)
+                        .attr("style","fill:red")
+                })
+                .on("mouseout",function(){
+                    d3.select(this)
+                        .attr("style","fill:black")
+                })
+                .on("click",function(){
+                    //
+                })
         },
-        /* draw1:function(index){
-            const me=this;
-            const svg=d3.select("#bar")
-                .append("svg")
-                .attr("width","150")
-                .attr("height","700");
-            const x = d3.scaleLinear()
-                .domain([0,200])
-                .range([0, 150]);
-            let bars=svg.append("g")
-                .selectAll("g")
-                .data(this.stu)
-                .enter()
-                .append("g");
-
-            bars.append("rect")
+        addfun:function(gs,x,me){
+            gs.append("rect")
                 .attr("x","0")
                 .attr("y",function(d,i){
                     return 17*i;
                 })
+                .transition()
+                .duration(800)
                 .attr("width",function(d,i){
-                    return x(d[Object.keys(d)[0]][2])
+                    return x(d.male)
                 })
                 .attr("height","15")
-                .attr("fill",(d,i)=>{
-                    return this.color1[0];
+                .attr("fill",me.color1[0])
+                .attr("fill-opacity","0.4")
+                .style("cursor","pointer");
+                
+            
+            gs.append("rect")
+                .attr("x",function(d,i){
+                    return x(d.male)+5;
                 })
-                .attr("fill-opacity","0.4");
-            bars.append("rect")
+                .attr("y",function(d,i){
+                    return 17*i;
+                })
+                .transition()
+                .duration(800)
+                .attr("width",function(d,i){
+                    return x(d.female);
+                })
+                .attr("height","15")
+                .attr("fill",me.color1[1])
+                .attr("fill-opacity","0.4")
+                .style("cursor","pointer");
+            gs.append("rect")
                 .attr("x","0")
                 .attr("y",function(d,i){
                     return 17*i;
                 })
+                .transition()
+                .duration(800)
                 .attr("width",function(d,i){
-                    return x(me.num[Object.keys(d)[0]][index])
+                    return x(d.rate[0])
                 })
                 .attr("height","15")
-                .attr("fill",(d,i)=>{
-                    return this.color1[0];
+                .attr("fill",me.color1[0]);
+            gs.append("rect")
+                .attr("x",function(d,i){
+                    return x(d.male)+5;
                 })
-                .on("mouseover",function(d){
-                    console.log(Object.keys(d)[0])
+                .attr("y",function(d,i){
+                    return 17*i;
                 })
-        }, */
+                .transition()
+                .duration(800)
+                .attr("width",function(d,i){
+                    return x(d.rate[1])
+                })
+                .attr("height","15")
+                .attr("fill",me.color1[1]);
+        }
     },
     created() {},
     mounted() {
@@ -189,10 +162,16 @@ export default {
     }
 };
 </script>
-<style scoped>
+<style>
 #bar{
-    width: 620px;
-    height: 700px;
-    margin: 10px;
+    width: 250px;
+    height: 720px;
+    position: absolute;
+    top: 1%;
+}
+#bar text{
+    font-weight: 100;
+    font-size: 12px ;
+    cursor: pointer;
 }
 </style>
