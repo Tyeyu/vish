@@ -2,8 +2,8 @@
   <div id="app">
     <!-- <Main></Main> -->
     <control ></control>
-    <!-- <calendar></calendar> -->
-    <rose></rose>
+    <calendar></calendar>
+    <!-- <rose></rose> -->
     <downpage></downpage>
     <lineChart></lineChart>
     <bar></bar>
@@ -54,6 +54,6 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    /* background-color: #191a1a; */
+    background-color: #191a1a;
   }
 </style>

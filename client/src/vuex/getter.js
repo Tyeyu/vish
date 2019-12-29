@@ -13,6 +13,9 @@ const getter = {
     },
     getforceedgescale(state){
         return state.forceedgescale;
+    },
+    getCaClickdate(state){
+        return state.CaClickdate;
     }
 }
 

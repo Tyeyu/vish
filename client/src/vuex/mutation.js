@@ -13,6 +13,10 @@ const mutation={
     },
     forceedgescale_state(state,payload){
         state.forceedgescale=payload;
+    },
+    CaClickdate_state(state,payload){
+        console.log("commmit",payload)
+        state.CaClickdate=payload;
     }
 }
 export default mutation;

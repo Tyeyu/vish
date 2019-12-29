@@ -12,6 +12,25 @@ let width=500,height=650;
 export default {
     name:"calendar",
     methods:{
+        CalendarStudentdata:function(){
+            let that=this;
+            var datas={
+            'date':that.$store.getters.getCaClickdate+" "
+            }
+            console.log(datas)
+            datas=JSON.stringify(datas);
+            var x=$.ajax({
+                type: "post",
+                url: "http://localhost/CalenStudent",
+                dataType:"json",
+                data: datas,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                   console.log(result)
+                }
+               
+            })
+        },
         CalendarAllNodedata:function(){
             var datas={
             'date':"2019"
@@ -180,7 +199,11 @@ export default {
                              return d.getDay() * cellSize;
                 })
                 .on("click", function(d) {
-                    })
+                    var x=d;
+                    x=x.split("/")
+                    x=Number(x[0])+"/"+Number(x[1])+"/"+Number(x[2]);
+                    that.$store.commit("CaClickdate_state",x);
+                })
                 .attr("fill","#2b2c2c")
                 .attr("opacity",0.3)
                 .datum(d3.timeFormat("%Y/%m/%d"));
@@ -623,15 +646,29 @@ export default {
     },
     mounted() {
     //   this.drawCalendar()
-      this.CalendarAllNodedata()
+      this.CalendarAllNodedata();
+      this.CalendarStudentdata();
     },
-   
+    computed: {
+        CaClickdate () {
+            console.log("ssssss")
+            console.log(this.$store.state.CaClickdate);
+            return this.$store.state.CaClickdate
+        }
+    },
     watch:{
        '$store.state.forcelegend':function(newdata,olddata){
-           console.log(newdata)
+        //    console.log(newdata)
            if(olddata!=null){
                this.Force();
            }
+       },
+      CaClickdate:function(newdata,olddata){
+          if(newdata!=null)
+          {
+              this.CalendarStudentdata();
+          }
+         
        }
     }
 
