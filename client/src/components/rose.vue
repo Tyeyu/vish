@@ -95,11 +95,29 @@ export default {
     },
     created() {},
     mounted() {
-        this.axios.get('static/day.json').then(result=>{
-            this.data=result.data;
-            this.draw1();
-        })
+        // this.axios.get('static/day.json').then(result=>{
+        //     this.data=result.data;
+        //     this.draw1();
+        // })
         
+    },
+     computed: {
+       STSpend () {
+            return this.$store.getters.getSTspend;
+        }
+    },
+    watch:{
+         STSpend:function(newval,oldval){
+             if(newval){
+                d3.select("#calendar").selectAll("svg").remove();
+                d3.select("#cir").selectAll("svg").remove();
+                this.axios.get('static/day.json').then(result=>{
+                this.data=result.data;
+                this.draw1();
+                })
+             }
+            
+         }
     }
 };
 </script>

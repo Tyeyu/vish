@@ -11,7 +11,11 @@ const store=new Vuex.Store({
         forcelegend:"",
         forceSvg:"",
         forceColorScale:"",
-        forceedgescale:""
+        forceedgescale:"",
+        CaClickdate:null,
+        STspend:false,
+        professionSpend:false,
+        Allflow:true,
     },
     mutations:mutation,
     actions:action,

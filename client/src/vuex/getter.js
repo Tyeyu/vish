@@ -13,6 +13,18 @@ const getter = {
     },
     getforceedgescale(state){
         return state.forceedgescale;
+    },
+    getCaClickdate(state){
+        return state.CaClickdate;
+    },
+    getSTspend(state){
+        return state.STspend;
+    },
+    getprofessionSpend(state){
+        return state.professionSpend;
+    },
+    getAllflow(state){
+        return state.Allflow;
     }
 }
 

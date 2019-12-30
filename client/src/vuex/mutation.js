@@ -13,6 +13,18 @@ const mutation={
     },
     forceedgescale_state(state,payload){
         state.forceedgescale=payload;
+    },
+    CaClickdate_state(state,payload){
+        state.CaClickdate=payload;
+    },
+    STspend_state(state,payload){
+        state.STspend=payload;
+    },
+    professionSpend_state(state,payload){
+        state.professionSpend=payload;
+    },
+    Allflow_state(state,payload){
+        state.Allflow=payload;
     }
 }
 export default mutation;

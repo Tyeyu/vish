@@ -1,13 +1,58 @@
 <template>
     <div id="conotrlvu">
     <div class="conotrlvu_header">
-        <h5>操作栏</h5>
-    </div>
+        <div>
+        <h3>操作栏</h3>
+        <div class="line-separator-1"></div>
+        </div>
+        <div>
+            <h4>消费</h4>
+            <div class="custom-control custom-radio">
+            <input
+                type="radio" name="spend"  @click="STspend()"
+            />
+            <label class="custom-control-label">食堂消费</label>
+            </div>
+             <div class="custom-control custom-radio">
+            <input
+                type="radio" name="spend" @click="professionSpend()"
+            />
+            <label class="custom-control-labe2" >专业消费</label>
+            </div>
+            <div class="line-separator-1"></div>
+        </div>
+        <div>
+            <h4>流量</h4>
+            </div>
+             <div class="custom-control custom-radio">
+            <input
+                type="radio" name="spend" checked="checked" @click="Allflow()"
+            />
+            <label class="custom-control-labe2" >总体情况</label>
+            </div>
+            <div class="line-separator-1"></div>
+        </div>
     </div>
 </template>
 <script>
 export default {
-    
+    methods: {
+        STspend:function(){
+            this.$store.commit("STspend_state",true);
+            this.$store.commit("professionSpend_state",false);
+            this.$store.commit("Allflow_state",false);
+        },
+        professionSpend:function(){
+            this.$store.commit("STspend_state",false);
+            this.$store.commit("professionSpend_state",true);
+            this.$store.commit("Allflow_state",false);
+        },
+        Allflow:function(){
+            this.$store.commit("STspend_state",false);
+            this.$store.commit("professionSpend_state",false);
+            this.$store.commit("Allflow_state",true);
+        }
+    }
 }
 </script>
 <style>
@@ -28,6 +73,10 @@ export default {
 }
 .conotrlvu_header{
 padding-top: 5px;
-  color: grey !important;
+  color: white !important;
+}
+.line-separator-1 {
+  height: 1px;
+  background: grey;
 }
 </style>
