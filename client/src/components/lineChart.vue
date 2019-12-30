@@ -123,7 +123,22 @@ export default {
     },
     created() {},
     mounted() {
-        this.getData();
+        // this.getData();
+    },
+    computed: {
+       STSpend () {
+            return this.$store.getters.getSTspend;
+        }
+    },
+    watch:{
+         STSpend:function(newval,oldval){
+             if(newval){
+                d3.select("#calendar").selectAll("svg").remove();
+                d3.select("#cir").selectAll("svg").remove();
+                this.getData();s
+             }
+            
+         }
     }
 };
 </script>

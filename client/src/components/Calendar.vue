@@ -647,18 +647,18 @@ export default {
     mounted() {
     //   this.drawCalendar()
       this.CalendarAllNodedata();
-      this.CalendarStudentdata();
     },
     computed: {
         CaClickdate () {
-            console.log("ssssss")
-            console.log(this.$store.state.CaClickdate);
-            return this.$store.state.CaClickdate
+            return this.$store.getters.getCaClickdate;
+        },
+        Allflow(){
+            return this.$store.getters.getAllflow;
+
         }
     },
     watch:{
        '$store.state.forcelegend':function(newdata,olddata){
-        //    console.log(newdata)
            if(olddata!=null){
                this.Force();
            }
@@ -669,6 +669,14 @@ export default {
               this.CalendarStudentdata();
           }
          
+       },
+       Allflow:function(newval,oldval){
+           if(newval){
+               d3.select("#cir").selectAll("svg").remove();
+               d3.select("#line_chart").selectAll("svg").remove();
+               d3.select("#calendar").selectAll("svg").remove();
+               this.CalendarAllNodedata();
+           }
        }
     }
 

@@ -3,7 +3,7 @@
     <!-- <Main></Main> -->
     <control ></control>
     <calendar></calendar>
-    <!-- <rose></rose> -->
+    <rose></rose>
     <downpage></downpage>
     <lineChart></lineChart>
     <bar></bar>
