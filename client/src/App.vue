@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <!-- <Main></Main> -->
+    <Main></Main>
     <control ></control>
     <!-- <calendar></calendar> -->
     <rose></rose>
     <downpage></downpage>
     <lineChart></lineChart>
     <bar></bar>
-    <pie></pie>
+    <!-- <pie></pie> -->
   </div>
 </template>
 
