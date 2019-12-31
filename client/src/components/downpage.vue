@@ -10,7 +10,7 @@ export default {
 #downpage{
     position: absolute;
     z-index: 1;
-    width: 100%;
+    width: 99%;
     max-height: 90%;
     left: 1%;
     top: calc(2% + 560px);

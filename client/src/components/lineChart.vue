@@ -134,8 +134,9 @@ export default {
          STSpend:function(newval,oldval){
              if(newval){
                 d3.select("#calendar").selectAll("svg").remove();
+                d3.select("#line_chart").selectAll("svg").remove();
                 d3.select("#cir").selectAll("svg").remove();
-                this.getData();s
+                this.getData();
              }
             
          }
@@ -151,27 +152,28 @@ export default {
      height: 300px;
 }
 #line_chart line{
-    stroke: DimGray;
+    stroke: white;
 }
-#line_chart .line path{
+#line_chart  path{
     fill:none;
     stroke-width: 1.5px;
-    stroke: DimGray;
+    stroke: white;
 }
 #line_chart text{
     font-size: 10px;
     font-weight: 100;
+    fill: antiquewhite
 }
 #line_chart circle{
     cursor: pointer;
 }
 #line_chart .boy{
-    fill: #1E90FF;
+    fill: aqua;
 }
 #line_chart .girl{
     fill:Tomato;
 }
 #line_chart .ave{
-    fill:Black;
+    fill:#a6cee3;
 }
 </style>

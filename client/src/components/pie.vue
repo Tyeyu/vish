@@ -31,16 +31,16 @@ export default {
              const svg = d3
                 .select("#pie")
                 .append("svg")
-                .attr("width", 300)
-                .attr("height", 300);
+                .attr("width", 250)
+                .attr("height", 250);
             let pie=d3.pie().value(d=>{
                     return d.money
                 })(data);
             var arc_generator = d3.arc()
-                .innerRadius(70)
-                .outerRadius(100);
+                .innerRadius(50)
+                .outerRadius(80);
             let gs=svg.append("g")
-                .attr("transform","translate(110,150)");
+                .attr("transform","translate(80,150)");
             gs.selectAll("g")
                 .data(pie)
                 .enter()
@@ -69,7 +69,7 @@ export default {
                     })
                     .attr("style","font-size:11px")
                     .attr("transform",function(d,i){
-                        return "translate("+220+","+(i*14+20)+")"
+                        return "translate("+175+","+(i*14+40)+")"
                     })
                     .attr("fill",function(d,i){
                         return d3.schemePaired[i%12];
@@ -79,6 +79,7 @@ export default {
                 .attr("transform","translate(0,13)")
                 .attr("style","font-weight:100")
                 .attr("style","font-size:15px")
+                .attr("fill","antiquewhite");
         }
     },
     created() {},
@@ -89,8 +90,8 @@ export default {
 </script>
 <style>
 #pie{
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     position: absolute;
     left: calc(2% + 610px);
     top: calc(2% + 580px);

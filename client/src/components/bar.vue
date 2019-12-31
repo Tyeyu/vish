@@ -29,7 +29,7 @@ export default {
                 .range([0, 150]);
             const svg=d3.select("#bar")
                 .append("svg")
-                .attr("width","650")
+                .attr("width","600")
                 .attr("height","300");
             let gs=svg.append("g")
                 .selectAll(".con")
@@ -85,11 +85,11 @@ export default {
                 })
                 .on("mouseover",function(){
                     d3.select(this)
-                        .attr("style","fill:red")
+                        .attr("style","fill:aqua")
                 })
                 .on("mouseout",function(){
                     d3.select(this)
-                        .attr("style","fill:black")
+                        .attr("style","fill:antiquewhite")
                 })
                 .on("click",function(){
                     //
@@ -160,13 +160,13 @@ export default {
     height: 300px;
     position: absolute;
     top: calc(2% + 580px);
-    left: 1%;
+    left: 1.5%;
     z-index: 2;
     
 }
 #bar text{
-    font-weight: 100;
     font-size: 12px ;
     cursor: pointer;
+    fill: antiquewhite;
 }
 </style>

@@ -37,6 +37,7 @@ export default {
                 .enter()
                 .append("text")
                     .attr("font","10px Microsoft YaHei")
+                    .attr("fill","antiquewhite")
                     .text(function(d){
                         return d;
                     })
@@ -84,7 +85,8 @@ export default {
                 sg.append("text")
                     .text(j)
                     .attr("transform","translate(0,15)")
-                    .attr("fill","white")
+                    .attr("font-size","12px")
+                    .attr("fill","antiquewhite")
             }
             
         },

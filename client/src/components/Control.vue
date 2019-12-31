@@ -13,12 +13,12 @@
             />
             <label class="custom-control-label">食堂消费</label>
             </div>
-             <div class="custom-control custom-radio">
+            <!--  <div class="custom-control custom-radio">
             <input
                 type="radio" name="spend" @click="professionSpend()"
             />
             <label class="custom-control-labe2" >专业消费</label>
-            </div>
+            </div> -->
             <div class="line-separator-1"></div>
         </div>
         <div>

@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <Main></Main>
+    <!-- <Main></Main> -->
     <control ></control>
     <calendar></calendar>
     <rose></rose>
     <downpage></downpage>
     <lineChart></lineChart>
     <bar></bar>
-    <!-- <pie></pie> -->
+    <pie></pie>
+    <barChart></barChart>
+    <histogram></histogram>
+    <sunburst></sunburst>
   </div>
 </template>
 
@@ -15,24 +18,28 @@
 import Main from '@/components/main'
 import calendar from '@/components/Calendar'
 import lineChart from '@/components/lineChart'
-import cir from '@/components/cir'
 import bar from '@/components/bar'
 import pie from '@/components/pie'
 import rose from '@/components/rose'
+import barChart from "@/components/barChart"
 import control from'@/components/Control'
 import downpage from "@/components/downpage"
+import histogram from "@/components/histogram"
+import sunburst from "@/components/sunburst"
 export default {
   name: 'App',
   components:{
     Main,
     calendar,
     lineChart,
-    cir,
     bar,
     pie,
     control,
     downpage,
-    rose
+    rose,
+    barChart,
+    histogram,
+    sunburst
   }
 }
 </script>
