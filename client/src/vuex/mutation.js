@@ -28,6 +28,9 @@ const mutation={
     },
     Allflow_state(state,payload){
         state.Allflow=payload;
+    },
+    selectdaydata_state(state,payload){
+        state.selectdaydata=payload;
     }
 }
 export default mutation;

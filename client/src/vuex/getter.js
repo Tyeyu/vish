@@ -28,6 +28,9 @@ const getter = {
     },
     getAllflow(state){
         return state.Allflow;
+    },
+    getselectdaydata(state){
+        return state.selectdaydata;
     }
 }
 

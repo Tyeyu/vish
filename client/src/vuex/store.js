@@ -17,6 +17,7 @@ const store=new Vuex.Store({
         STspend:false,
         professionSpend:false,
         Allflow:true,
+        selectdaydata:null
     },
     mutations:mutation,
     actions:action,
