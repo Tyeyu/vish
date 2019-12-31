@@ -53,7 +53,7 @@ export default {
                 })
                 .attr("style","cursor:pointer")
                 .on("mousemove",function(d){
-                    console.log(d)
+                    // console.log(d)
                 })
                 .on("mouseleave",function(){
                     d3.selectAll(".hl").remove();

@@ -59,11 +59,11 @@ export default {
 #conotrlvu{
     position: absolute;
     z-index: 1;
-    width: 12.5%;
+    width: 5.5%;
     max-height: 90%;
     left: 1%;
     top: 1%;
-    height: 560px;
+    height: 200px;
     border-radius: 0.3em;
     box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.3) inset,
     0 0.5em 1em rgba(0, 0, 0, 0.6);

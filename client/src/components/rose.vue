@@ -103,7 +103,7 @@ export default {
         // })
         
     },
-     computed: {
+    computed: {
        STSpend () {
             return this.$store.getters.getSTspend;
         }

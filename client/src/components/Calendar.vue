@@ -661,7 +661,7 @@ export default {
                d3.select("#cir").selectAll("svg").remove();
                d3.select("#line_chart").selectAll("svg").remove();
                d3.select("#calendar").selectAll("svg").remove();
-               d3.select("sunburst").selectAll("canvas").remove();
+            //    d3.select("#sunburst").selectAll("canvas").remove();
                this.CalendarAllNodedata();
            }
        }
@@ -701,7 +701,7 @@ function pathMonth(t0) {
 <style>
 #calendar{
     position:absolute;
-    left: 15%;
+    left: 6%;
     top: 1%;
 }
  .information h3 {
