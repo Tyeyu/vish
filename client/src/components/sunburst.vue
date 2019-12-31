@@ -16,7 +16,7 @@ export default {
     computed: {},
     watch: {},
     methods: {
-        drawSunburst: function() {
+        drawSunburst: function() { 
             var dom = document.getElementById("sunburst");
             var myChart = echarts.init(dom);
             var app = {};
@@ -85,11 +85,20 @@ export default {
     },
     created() {},
     mounted() {
-        this.drawSunburst();
+        // this.drawSunburst();
     },
     computed: {
+       STSpend () {
+            return this.$store.getters.getSTspend;
+        }
     },
-    watch: {
+    watch:{
+         STSpend:function(newval,oldval){
+             if(newval){
+               this.drawSunburst();
+             }
+            
+         }
     }
 };
 </script>
@@ -97,7 +106,7 @@ export default {
 #sunburst {
     position: absolute;
     top: 1%;
-    left: 1270px;
+    left: calc(14% + 1100px);
     width: 330px;
     height: 300px;
 }
