@@ -3,6 +3,7 @@
     <!-- <Main></Main> -->
     <control ></control>
     <calendar></calendar>
+    <calendarline></calendarline>
     <rose></rose>
     <downpage></downpage>
     <lineChart></lineChart>
@@ -24,8 +25,12 @@ import rose from '@/components/rose'
 import barChart from "@/components/barChart"
 import control from'@/components/Control'
 import downpage from "@/components/downpage"
+<<<<<<< HEAD
 import histogram from "@/components/histogram"
 import sunburst from "@/components/sunburst"
+=======
+import calendarline from "@/components/Calendarline"
+>>>>>>> a3606aa767e518d9306d44ce855d6b08037cf9d2
 export default {
   name: 'App',
   components:{
@@ -37,9 +42,13 @@ export default {
     control,
     downpage,
     rose,
+<<<<<<< HEAD
     barChart,
     histogram,
     sunburst
+=======
+    calendarline
+>>>>>>> a3606aa767e518d9306d44ce855d6b08037cf9d2
   }
 }
 </script>

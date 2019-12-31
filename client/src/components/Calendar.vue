@@ -12,25 +12,7 @@ let width=500,height=650;
 export default {
     name:"calendar",
     methods:{
-        CalendarStudentdata:function(){
-            let that=this;
-            var datas={
-            'date':that.$store.getters.getCaClickdate+" "
-            }
-            console.log(datas)
-            datas=JSON.stringify(datas);
-            var x=$.ajax({
-                type: "post",
-                url: "http://localhost/CalenStudent",
-                dataType:"json",
-                data: datas,
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                   console.log(result)
-                }
-               
-            })
-        },
+       
         CalendarAllNodedata:function(){
             var datas={
             'date':"2019"
@@ -116,7 +98,7 @@ export default {
 
             var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             var svg = d3
-                .select("#calendar")
+                .select("#calendar").attr( "width", 500).attr("height", 650)
                 .append("svg")
                 .attr("width",width)
                 .attr("height", height);
@@ -200,9 +182,14 @@ export default {
                 })
                 .on("click", function(d) {
                     var x=d;
+
                     x=x.split("/")
+                    var s=Number(x[0])+"_"+Number(x[1])+"_"+Number(x[2])
                     x=Number(x[0])+"/"+Number(x[1])+"/"+Number(x[2]);
+                    
+                    that.$store.commit("CaClicktable_state","c"+s);
                     that.$store.commit("CaClickdate_state",x);
+                    
                 })
                 .attr("fill","#2b2c2c")
                 .attr("opacity",0.3)
@@ -478,19 +465,24 @@ export default {
                         if(d=="学生")
                             return;
                         var value=d3.select(this).attr("opacity");
-                        let lend=that.$store.getters.getforcelegend;
+                        var oldlend=that.$store.getters.getforcelegend;
+                        var newlend;
                         if(value!=1){
                            
-                            lend.set(d,1);
+                            oldlend.set(d,1);
+                            newlend=oldlend.keys()
                             d3.select(this).attr("opacity",1);
-                            that.$store.state.forcelegend=lend;
-                            that.Force();
+                            that.$store.commit("forcelegend_state",that.saveLendmap(newlend));
+                            // that.$store.state.forcelegend=lend;
+                            // that.Force();
                         }
                         else{
-                            lend.remove(d);
+                            oldlend.remove(d);
+                            newlend=oldlend.keys()
                             d3.select(this).attr("opacity",0.1);
-                            that.$store.state.forcelegend=lend;
-                            that.Force();
+                            that.$store.commit("forcelegend_state",that.saveLendmap(newlend));
+                            // that.$store.state.forcelegend=lend;
+                            // that.Force();
                         }
                       
                         // console.log(value)
@@ -649,26 +641,20 @@ export default {
       this.CalendarAllNodedata();
     },
     computed: {
-        CaClickdate () {
-            return this.$store.getters.getCaClickdate;
-        },
+      
         Allflow(){
             return this.$store.getters.getAllflow;
 
+        },
+        forcelegend(){
+           return this.$store.state.forcelegend;
         }
     },
     watch:{
-       '$store.state.forcelegend':function(newdata,olddata){
+       forcelegend:function(newdata,olddata){
            if(olddata!=null){
                this.Force();
            }
-       },
-      CaClickdate:function(newdata,olddata){
-          if(newdata!=null)
-          {
-              this.CalendarStudentdata();
-          }
-         
        },
        Allflow:function(newval,oldval){
            if(newval){
@@ -732,10 +718,10 @@ function pathMonth(t0) {
     margin-top: 5px !important;
     margin-bottom: 5px !important;
   }
-#calendar{
+/* #calendar{
     width: 500px;
     height: 650px;
-}
+} */
 #calendar .unselected{
   opacity:0.3
 }

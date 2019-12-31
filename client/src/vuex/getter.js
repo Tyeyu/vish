@@ -17,6 +17,9 @@ const getter = {
     getCaClickdate(state){
         return state.CaClickdate;
     },
+    getCaClicktable(state){
+        return state.CaClicktable;
+    },
     getSTspend(state){
         return state.STspend;
     },
@@ -25,6 +28,9 @@ const getter = {
     },
     getAllflow(state){
         return state.Allflow;
+    },
+    getselectdaydata(state){
+        return state.selectdaydata;
     }
 }
 

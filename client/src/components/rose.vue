@@ -27,7 +27,7 @@ export default {
         draw1:function(){
             const me=this;
             var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            const svg=d3.select("#cir")
+            const svg=d3.select("#cir").attr("width",500).attr("height",650).style("position","absolute").style("left","220px").style("top","1%")
                 .append("svg")
                 .attr("width","500")
                 .attr("height","600");
@@ -113,6 +113,7 @@ export default {
              if(newval){
                 d3.select("#calendar").selectAll("svg").remove();
                 d3.select("#cir").selectAll("svg").remove();
+                d3.select("#calendarline").selectAll("svg").remove();
                 this.axios.get('static/day.json').then(result=>{
                 this.data=result.data;
                 this.draw1();
@@ -124,13 +125,13 @@ export default {
 };
 </script>
 <style >
-#cir{
+/* #cir{
     width: 500px;
     height: 650px;
     position: absolute;
     left: 220px;
     top: 1%;
-}
-#cir svg{
-}
+} */
+/* #cir svg{
+} */
 </style>

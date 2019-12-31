@@ -8,14 +8,16 @@ Vue.use(Vuex);
 const store=new Vuex.Store({
     state:{
         Cforcedata:{},
-        forcelegend:"",
-        forceSvg:"",
-        forceColorScale:"",
-        forceedgescale:"",
+        forcelegend:null,
+        forceSvg:null,
+        forceColorScale:null,
+        forceedgescale:null,
         CaClickdate:null,
+        CaClicktable:null,
         STspend:false,
         professionSpend:false,
         Allflow:true,
+        selectdaydata:null
     },
     mutations:mutation,
     actions:action,

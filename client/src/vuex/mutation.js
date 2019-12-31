@@ -3,6 +3,7 @@ const mutation={
         state.Cforcedata=payload;
     },
     forcelegend_state(state,payload){
+        console.log("ssssss")
         state.forcelegend=payload;
     },
     forceSvg_state(state,payload){
@@ -17,6 +18,9 @@ const mutation={
     CaClickdate_state(state,payload){
         state.CaClickdate=payload;
     },
+    CaClicktable_state(state,payload){
+        state.CaClicktable=payload;
+    },
     STspend_state(state,payload){
         state.STspend=payload;
     },
@@ -25,6 +29,9 @@ const mutation={
     },
     Allflow_state(state,payload){
         state.Allflow=payload;
+    },
+    selectdaydata_state(state,payload){
+        state.selectdaydata=payload;
     }
 }
 export default mutation;
