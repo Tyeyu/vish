@@ -13,7 +13,7 @@ export default {
     width: 99%;
     max-height: 90%;
     left: 1%;
-    top: calc(2% + 560px);
+    top: calc(2% + 565px);
     height: calc(97% - 560px);
     border-radius: 0.3em;
     box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.3) inset,
