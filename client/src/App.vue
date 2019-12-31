@@ -29,7 +29,10 @@ import downpage from "@/components/downpage"
 import histogram from "@/components/histogram"
 import sunburst from "@/components/sunburst"
 import calendarline from "@/components/Calendarline"
+<<<<<<< HEAD
 import flowChart from "@/components/flowChart"
+=======
+>>>>>>> fbcf015267ff340341bfdc1245e8c88ff72f2fed
 export default {
   name: 'App',
   components:{
@@ -44,8 +47,12 @@ export default {
     barChart,
     histogram,
     sunburst,
+<<<<<<< HEAD
     calendarline,
     flowChart
+=======
+    calendarline
+>>>>>>> fbcf015267ff340341bfdc1245e8c88ff72f2fed
   }
 }
 </script>
