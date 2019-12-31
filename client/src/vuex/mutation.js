@@ -17,6 +17,9 @@ const mutation={
     CaClickdate_state(state,payload){
         state.CaClickdate=payload;
     },
+    CaClicktable_state(state,payload){
+        state.CaClicktable=payload;
+    },
     STspend_state(state,payload){
         state.STspend=payload;
     },

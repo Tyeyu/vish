@@ -17,6 +17,9 @@ const getter = {
     getCaClickdate(state){
         return state.CaClickdate;
     },
+    getCaClicktable(state){
+        return state.CaClicktable;
+    },
     getSTspend(state){
         return state.STspend;
     },

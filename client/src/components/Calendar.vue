@@ -15,7 +15,8 @@ export default {
         CalendarStudentdata:function(){
             let that=this;
             var datas={
-            'date':that.$store.getters.getCaClickdate+" "
+            'date':that.$store.getters.getCaClickdate+" ",
+            'table':that.$store.getters.getCaClicktable
             }
             console.log(datas)
             datas=JSON.stringify(datas);
@@ -200,9 +201,14 @@ export default {
                 })
                 .on("click", function(d) {
                     var x=d;
+
                     x=x.split("/")
+                    var s=Number(x[0])+"_"+Number(x[1])+"_"+Number(x[2])
                     x=Number(x[0])+"/"+Number(x[1])+"/"+Number(x[2]);
+                    
+                    that.$store.commit("CaClicktable_state","c"+s);
                     that.$store.commit("CaClickdate_state",x);
+                    
                 })
                 .attr("fill","#2b2c2c")
                 .attr("opacity",0.3)
@@ -651,6 +657,9 @@ export default {
     computed: {
         CaClickdate () {
             return this.$store.getters.getCaClickdate;
+        },
+        CaClicktable () {
+            return this.$store.getters.getCaClicktable;
         },
         Allflow(){
             return this.$store.getters.getAllflow;

@@ -124,7 +124,7 @@ public class DataController extends AController{
 	@RequestMapping(value="/CalenStudent",method= RequestMethod.POST)//返回相关时间
 	public <T> List<T> CalenderStuden(@RequestBody Map<String, String> datas){
 		List<T> lists=null;
-		lists=(List<T>) CaStudent.SelectSomeDay(this.getJdbcTemplate(), datas.get("date"));
+		lists=(List<T>) CaStudent.SelectSomeDay(this.getJdbcTemplate(), datas.get("date"),datas.get("table"));
 		System.out.println(lists);
 		return lists;
 	}

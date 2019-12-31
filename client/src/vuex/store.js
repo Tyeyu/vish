@@ -13,6 +13,7 @@ const store=new Vuex.Store({
         forceColorScale:"",
         forceedgescale:"",
         CaClickdate:null,
+        CaClicktable:null,
         STspend:false,
         professionSpend:false,
         Allflow:true,

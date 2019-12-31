@@ -9,8 +9,9 @@ import com.example.vis.entitys.CalendarStudent;
 
 public class CalendarStudentDao {
 	@SuppressWarnings("unchecked")
-	public <T> List<T> SelectSomeDay(NamedParameterJdbcTemplate jdbcTemplate,String day){
-		String sql="select CardNo,Date,Major,Address,Sex from CalendarStudent where Date like '"+day+"%'";
+	public <T> List<T> SelectSomeDay(NamedParameterJdbcTemplate jdbcTemplate,String day,String tablename){
+		
+		String sql="select * from "+tablename;
 		BeanPropertyRowMapper<CalendarStudent> rowMapper=new BeanPropertyRowMapper<CalendarStudent>(CalendarStudent.class);
 		List<T> list=(List<T>)jdbcTemplate.query(sql, rowMapper);
 		return list.size()>0? list:null;
