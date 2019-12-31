@@ -12,26 +12,7 @@ let width=500,height=650;
 export default {
     name:"calendar",
     methods:{
-        CalendarStudentdata:function(){
-            let that=this;
-            var datas={
-            'date':that.$store.getters.getCaClickdate+" ",
-            'table':that.$store.getters.getCaClicktable
-            }
-            console.log(datas)
-            datas=JSON.stringify(datas);
-            var x=$.ajax({
-                type: "post",
-                url: "http://localhost/CalenStudent",
-                dataType:"json",
-                data: datas,
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                   console.log(result)
-                }
-               
-            })
-        },
+       
         CalendarAllNodedata:function(){
             var datas={
             'date':"2019"
@@ -117,7 +98,7 @@ export default {
 
             var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             var svg = d3
-                .select("#calendar")
+                .select("#calendar").attr( "width", 500).attr("height", 650)
                 .append("svg")
                 .attr("width",width)
                 .attr("height", height);
@@ -655,12 +636,7 @@ export default {
       this.CalendarAllNodedata();
     },
     computed: {
-        CaClickdate () {
-            return this.$store.getters.getCaClickdate;
-        },
-        CaClicktable () {
-            return this.$store.getters.getCaClicktable;
-        },
+      
         Allflow(){
             return this.$store.getters.getAllflow;
 
@@ -671,13 +647,6 @@ export default {
            if(olddata!=null){
                this.Force();
            }
-       },
-      CaClickdate:function(newdata,olddata){
-          if(newdata!=null)
-          {
-              this.CalendarStudentdata();
-          }
-         
        },
        Allflow:function(newval,oldval){
            if(newval){
@@ -741,10 +710,10 @@ function pathMonth(t0) {
     margin-top: 5px !important;
     margin-bottom: 5px !important;
   }
-#calendar{
+/* #calendar{
     width: 500px;
     height: 650px;
-}
+} */
 #calendar .unselected{
   opacity:0.3
 }

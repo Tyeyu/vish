@@ -3,6 +3,7 @@
     <!-- <Main></Main> -->
     <control ></control>
     <calendar></calendar>
+    <calendarline></calendarline>
     <rose></rose>
     <downpage></downpage>
     <lineChart></lineChart>
@@ -21,6 +22,7 @@ import pie from '@/components/pie'
 import rose from '@/components/rose'
 import control from'@/components/Control'
 import downpage from "@/components/downpage"
+import calendarline from "@/components/Calendarline"
 export default {
   name: 'App',
   components:{
@@ -32,7 +34,8 @@ export default {
     pie,
     control,
     downpage,
-    rose
+    rose,
+    calendarline
   }
 }
 </script>
