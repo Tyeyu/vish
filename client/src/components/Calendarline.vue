@@ -22,13 +22,14 @@ export default {
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
                     // console.log(result)
-                    that.commit("selectdaydata_state",result);
+                    that.$store.commit("selectdaydata_state",result);
                     that.drawline(result);
                 }
                
             })
         },
         drawline:function(data){
+            // console.log(data)
             var width=550,height=300,left=30;
             let that=this;
             
@@ -155,7 +156,7 @@ export default {
             return this.$store.getters.getCaClicktable;
         },
         Calegend(){
-            return this.$store.getters.getforcelegend;
+            return this.$store.state.forcelegend;
         }
     },
     watch:{
@@ -168,9 +169,12 @@ export default {
          
        },
        Calegend:function(newval,oldval){
+           console.log(newval)
            if(this.$store.getters.getAllflow&&this.$store.getters.getCaClickdate!=null){
                if(newval!=null){
-
+                   d3.select("#calendarline").selectAll("svg").remove();
+                   
+                    this.drawline(this.$store.getters.getselectdaydata);
                }
            }
        }

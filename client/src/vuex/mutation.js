@@ -3,6 +3,7 @@ const mutation={
         state.Cforcedata=payload;
     },
     forcelegend_state(state,payload){
+        console.log("ssssss")
         state.forcelegend=payload;
     },
     forceSvg_state(state,payload){

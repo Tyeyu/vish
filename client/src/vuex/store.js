@@ -8,10 +8,10 @@ Vue.use(Vuex);
 const store=new Vuex.Store({
     state:{
         Cforcedata:{},
-        forcelegend:"",
-        forceSvg:"",
-        forceColorScale:"",
-        forceedgescale:"",
+        forcelegend:null,
+        forceSvg:null,
+        forceColorScale:null,
+        forceedgescale:null,
         CaClickdate:null,
         CaClicktable:null,
         STspend:false,

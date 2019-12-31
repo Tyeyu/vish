@@ -465,19 +465,24 @@ export default {
                         if(d=="学生")
                             return;
                         var value=d3.select(this).attr("opacity");
-                        let lend=that.$store.getters.getforcelegend;
+                        var oldlend=that.$store.getters.getforcelegend;
+                        var newlend;
                         if(value!=1){
                            
-                            lend.set(d,1);
+                            oldlend.set(d,1);
+                            newlend=oldlend.keys()
                             d3.select(this).attr("opacity",1);
-                            that.$store.state.forcelegend=lend;
-                            that.Force();
+                            that.$store.commit("forcelegend_state",that.saveLendmap(newlend));
+                            // that.$store.state.forcelegend=lend;
+                            // that.Force();
                         }
                         else{
-                            lend.remove(d);
+                            oldlend.remove(d);
+                            newlend=oldlend.keys()
                             d3.select(this).attr("opacity",0.1);
-                            that.$store.state.forcelegend=lend;
-                            that.Force();
+                            that.$store.commit("forcelegend_state",that.saveLendmap(newlend));
+                            // that.$store.state.forcelegend=lend;
+                            // that.Force();
                         }
                       
                         // console.log(value)
@@ -640,10 +645,13 @@ export default {
         Allflow(){
             return this.$store.getters.getAllflow;
 
+        },
+        forcelegend(){
+           return this.$store.state.forcelegend;
         }
     },
     watch:{
-       '$store.state.forcelegend':function(newdata,olddata){
+       forcelegend:function(newdata,olddata){
            if(olddata!=null){
                this.Force();
            }
