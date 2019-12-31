@@ -1,5 +1,5 @@
 <template>
-    <div id="sunburst"></div>
+   
 </template>
 
 <script>
@@ -17,6 +17,8 @@ export default {
     watch: {},
     methods: {
         drawSunburst: function() { 
+            d3.select("#sunburst").remove();
+            d3.select("#app").append("div").attr("id","sunburst");
             var dom = document.getElementById("sunburst");
             var myChart = echarts.init(dom);
             var app = {};

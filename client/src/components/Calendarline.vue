@@ -31,7 +31,7 @@ export default {
         },
         drawline:function(data){
             // console.log(data)
-            var width=550,height=300,left=30;
+            var width=950,height=300,left=30;
             let that=this;
             
             var lenkeys=this.$store.getters.getforcelegend;

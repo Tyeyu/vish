@@ -1,5 +1,5 @@
 <template>
-    <div id="flowChart"></div>
+    
 </template>
 
 <script>
@@ -30,15 +30,17 @@ export default {
             
         },
         drawflowChart: function() {
+            d3.select("#flowChart").remove();
+            d3.select("#app").append("div").attr("id","flowChart");
             var timeData = this.timeData;
             var data1=this.data;
-            console.log(data1)
+            // console.log(data1)
             var dom = document.getElementById("flowChart");
             var myChart = echarts.init(dom);
             var option = {
                 title: {
                     text: "各食堂营业额",
-                    x: "right",
+                    x: "center",
                      textStyle:{
                         color:"antiquewhite"
                     }
@@ -131,10 +133,21 @@ export default {
     },
     created() {},
     mounted() {
-        this.initData();
+        // this.initData();
     },
-    computed: {},
-    watch: {}
+   computed: {
+       STSpend () {
+            return this.$store.getters.getSTspend;
+        }
+    },
+    watch:{
+         STSpend:function(newval,oldval){
+             if(newval){
+              this.initData();
+             }
+            
+         }
+    }
 };
 </script>
 <style>
@@ -142,8 +155,8 @@ export default {
     position: absolute;
     border: 1px solid black;
     top: calc(2% + 300px);
-    left: 720px;;
-    width: 875px;
+    left:calc(6% + 550px);
+    width: calc(94% - 550px);
     height: 260px;
 }
 </style>

@@ -661,6 +661,8 @@ export default {
                d3.select("#cir").selectAll("svg").remove();
                d3.select("#line_chart").selectAll("svg").remove();
                d3.select("#calendar").selectAll("svg").remove();
+               d3.select("#flowChart").remove();
+               d3.select("#sunburst").remove();
             //    d3.select("#sunburst").selectAll("canvas").remove();
                this.CalendarAllNodedata();
            }

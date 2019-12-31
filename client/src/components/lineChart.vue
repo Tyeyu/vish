@@ -25,7 +25,7 @@ export default {
         drawLineChart: function() {
             //折线图
             const svg = d3
-                .select("#line_chart").attr("width",550).attr("height",300).style("position","absolute").style("left","720px").style("top","1%")
+                .select("#line_chart").attr("width",550).attr("height",300)
                 .append("svg")
                 .attr("width", 550)
                 .attr("height", 300);
@@ -144,13 +144,13 @@ export default {
 };
 </script>
 <style>
-/* #line_chart{
-     position: absolute;
-     top: 1%;
-     left:720px;
-     width: 550px;
-     height: 300px;
-} */
+#line_chart{
+    position: absolute;
+    top: 1%;
+    left:calc(6% + 550px);
+     /* width: 550px;
+     height: 300px; */
+}
 #line_chart line{
     stroke: white;
 }
