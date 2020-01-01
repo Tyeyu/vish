@@ -38,6 +38,7 @@ export default {
             var dom = document.getElementById("flowChart");
             var myChart = echarts.init(dom);
             var option = {
+                color:["#FFCCCC","#99CC33","#66CCCC","#CCCCFF","#6699CC"],
                 title: {
                     text: "各食堂收入趋势",
                     x: "right",

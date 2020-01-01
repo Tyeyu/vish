@@ -349,10 +349,11 @@ export default {
                 .attr("height",config.height);
            var link= svg.append("g")
                         .attr("stroke", "#999")
-                        .attr("stroke-opacity", 0.8)
+                        
                         .selectAll("line")
                         .data(config.linkes)
                         .join("line")
+                        .attr("stroke-opacity", 0.8)
                         .attr("stroke-width", function(d){
                            
                             return config.edgescale(d.value)*20
@@ -373,6 +374,7 @@ export default {
                                 return config.colorscale(d.id);
                             }
                         })
+                        .attr("opacity",1)
                         .call(d3.drag()
                             .on("start", started)
                             .on("drag", dragged)
@@ -490,6 +492,51 @@ export default {
                       
                         // console.log(value)
                     })
+                    .on("mouseover",function(d){
+                        if(d=="学生")
+                        {
+                            return;
+                        }
+                        var op=d3.select(this).attr("opacity")
+                        if(parseInt(op)!=1){
+                            return ;
+                        }
+                        d3.select("#calendar").selectAll(".allnode").attr("temp",function(s){
+                            var s=d3.select(this).selectAll("circle").attr("opacity",function(m){
+                                // console.log(d,m)
+                                if(m.id=="学生"||m.id==d){
+                                    return 1
+                                }
+                                else{
+                                    return 0.3;
+                                }
+                            })
+                            d3.select(this).selectAll("line").attr("stroke-opacity",function(m){
+                                // console.log(m)
+                                if(m.target.id==d){
+                                    return 0.8;
+                                }
+                                else{
+                                    return 0.3;
+                                }
+                            })
+                        })
+                    })
+                    .on("mouseout",function(d){
+                          if(d=="学生")
+                        {
+                            return;
+                        }
+                        var op=d3.select(this).attr("opacity")
+                        if(parseInt(op)!=1){
+                            return ;
+                        }
+                        d3.select("#calendar").selectAll(".allnode").attr("temp",function(s){
+                            var s=d3.select(this).selectAll("circle").attr("opacity",1);
+                            d3.select(this).selectAll("line").attr("stroke-opacity",0.8);
+                        })
+                        
+                    })
                     .append("title").text(d=>{return d})
         },
         drawSquare:function(svg){
@@ -578,7 +625,7 @@ export default {
                 }
                 var times = (new Date()).getTime()-clickTime;
                
-                if(change==1&&move&&times>200){
+                if(change==1&&move&&times>300){
                     
                        //最后通过和node的坐标比较，确定哪些点在圈选范围
                     var lend=["学生"]

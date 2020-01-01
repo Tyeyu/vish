@@ -39,6 +39,7 @@ export default {
         }
         ,
         draw:function(data){
+            var that=this;
             //画饼图 
              const svg = d3
                 .select("#pie")
@@ -61,7 +62,9 @@ export default {
                     return arc_generator(d);
                 })
                 .attr("fill",function(d,i){
-                    return d3.schemePaired[i%12];
+                   
+                   var color=that.$store.getters.getforceColorScale;
+                    return color(d.data.Dept);
                 })
                 .attr("style","cursor:pointer");
             san.append("title")
@@ -80,7 +83,9 @@ export default {
                         return "translate("+175+","+(i*14+40)+")"
                     })
                     .attr("fill",function(d,i){
-                        return d3.schemePaired[i%12];
+                       
+                        var color=that.$store.getters.getforceColorScale
+                        return color(d.Dept);
                     });
             svg.append("text")
                 .text(this.selectedMajor)
@@ -92,7 +97,22 @@ export default {
     },
     created() {},
     mounted() {
-        this.getData();
+        // this.getData();
+    },
+    computed: {
+        Colors(){
+            return this.$store.getters.getforceColorScale;
+        }
+    },
+    watch:{
+      Colors:function(newval,oldval){
+        //    console.log(newval)
+            // console.log(newval)
+            if(newval!=null){
+                d3.select("#pie").selectAll("svg").remove();
+                this.getData();
+            }
+       }
     }
 };
 </script>

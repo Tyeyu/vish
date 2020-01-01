@@ -31,7 +31,8 @@ export default {
         },
         drawline:function(data){
             // console.log(data)
-            var width=950,height=300,left=30;
+            d3.select("#calendarline").selectAll("svg").remove();
+            var width=550,height=300,left=30;
             let that=this;
             
             var lenkeys=this.$store.getters.getforcelegend;
@@ -84,6 +85,11 @@ export default {
                 .append("svg")
                 .attr("width", width)
                 .attr("height", height);
+            svg.append("text")
+            .attr("fill","white")
+            .attr("transform", "translate(25,25)")
+            .text(this.$store.getters.getCaClickdate+"选中地区日流量图")
+
             var xAxis = d3.axisBottom(timescale)
                 .ticks(5)
                 .tickFormat((d)=>{
@@ -154,6 +160,10 @@ export default {
                         legendData: [],
                         seriesData:[],
                         selected:[]};
+                    var elinedata={
+                        legendData:[],
+                        seriesData:[]
+                    }
                     var ek=0;
                     var s=[];
                     var sk=0;
@@ -169,6 +179,26 @@ export default {
                     var sex=[];
                     for(var i=0;i<s.length;i++){
                         edata.legendData[ek]=s[i].name;
+
+                        elinedata.legendData[ek]=s[i].name;
+                        var elined=[];
+                        var eli=amap.get(s[i].name);
+                        var slnest=d3.nest()
+                                    .key(function(d) { return d.date; })
+                                    .entries(eli);
+                       
+                        slnest.sort((a,b)=>{
+                           
+                            return new Date(a.key) < new Date(b.key) ? -1 :  new Date(a.key) > new Date(b.key) ? 1 : 0
+                        })
+                        for(var k=0;k<slnest.length;k++){
+                            
+                            elined[k]=[slnest[k].key,slnest[k].values.length];
+                        }
+                        
+                        elinedata.seriesData[ek]={name:s[i].name,type:'line',stack: '总量',data:elined}
+
+
                         edata.seriesData[ek]={name:s[i].name,value:s[i].value};
                         
                         edata.selected[s[i].name]=true;
@@ -192,6 +222,8 @@ export default {
                     }
                     that.edraw(edata,d);
                     that.ebardraw(sex,d);
+                    console.log(elinedata);
+                    that.edraline(elinedata,d);
                     // console.log(edata);
                 })
                 .append("title")
@@ -256,7 +288,7 @@ export default {
             var dom=d3.select("#app").append("div").attr("id","ebar").style("width","500px").style("height","260px");
             var dom1=document.getElementById("ebar");
             var myChart = echarts.init(dom1);
-            var myChart = echarts.init(dom1);
+            // var myChart = echarts.init(dom1);
             var option = {
                 color:["#1E90FF","Tomato"],
                 legend: {
@@ -303,6 +335,58 @@ export default {
                     ]
                 };
             myChart.setOption(option, true);
+        },
+        edraline:function(data,title){
+            d3.selectAll("#edraline").remove();
+            var dom=d3.select("#app").append("div").attr("id","edraline").style("width","450px").style("height","300px");
+            var dom1=document.getElementById("edraline");
+            var myChart = echarts.init(dom1);
+            var option = {
+                    title: {
+                        text: title+"各专业日流量",
+                        textStyle:{
+                        //文字颜色
+                            color:'white',
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        
+                    },
+                    legend: {
+                        top: 20,
+                        textStyle:{
+                        color:'white'
+                        },
+                        data:data.legendData
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'time',
+                        boundaryGap: false,
+                        // data: ['周一','周二','周三','周四','周五','周六','周日'],
+                        axisLine: {
+                            lineStyle: {
+                            color: 'white'
+                                }
+                            }
+                        },
+                    yAxis: {
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                            color: 'white'
+                                }
+                            }
+                    },
+                    series: data.seriesData
+            };
+            myChart.setOption(option,true);
         }
     },
      mounted() {
@@ -330,7 +414,7 @@ export default {
          
        },
        Calegend:function(newval,oldval){
-           console.log(newval)
+        //    console.log(newval)
            if(this.$store.getters.getAllflow&&this.$store.getters.getCaClickdate!=null){
                if(newval!=null){
                    d3.select("#calendarline").selectAll("svg").remove();
@@ -343,6 +427,11 @@ export default {
 }
 </script>
 <style>
+#edraline{
+    position: absolute;
+    left:calc(7% + 1100px);
+    top: 1%;
+}
 #ebar{
     position: absolute;
     left:calc(6% + 1070px);

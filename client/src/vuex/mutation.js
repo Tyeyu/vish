@@ -3,12 +3,14 @@ const mutation={
         state.Cforcedata=payload;
     },
     forcelegend_state(state,payload){
+        
         state.forcelegend=payload;
     },
     forceSvg_state(state,payload){
         state.forceSvg=payload;
     },
     forceColorScale_state(state,payload){
+        console.log("ssssss")
         state.forceColorScale=payload;
     },
     forceedgescale_state(state,payload){

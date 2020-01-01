@@ -71,6 +71,7 @@ export default {
                 }
             ];
             option = {
+                color:["#FFCCCC","#99CC33","#66CCCC","#CCCCFF","#6699CC"],
                 series: {
                     type: "sunburst",
                     highlightPolicy: "ancestor",

@@ -47,7 +47,7 @@ export default {
             this.$store.commit("STspend_state",true);
             this.$store.commit("professionSpend_state",false);
             this.$store.commit("Allflow_state",false);
-            this.message="xxxxx";
+            this.message="消费日历图";
         },
         professionSpend:function(){
             this.$store.commit("STspend_state",false);
