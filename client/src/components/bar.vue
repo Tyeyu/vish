@@ -5,11 +5,14 @@
 <script>
 import $ from "jquery";
 import * as d3 from "d3";
+// var positions=document.getElementById("downpage");
+// var height=positions.offsetHeight-50;
 export default {
     components: {},
     data() {
         return {
-            color1:["#1E90FF","Tomato"]
+            color1:["#1E90FF","Tomato"],
+            height:null,
         };
     },
     computed: {},
@@ -22,6 +25,7 @@ export default {
             })
         },
         draw:function(){
+           var that=this;
             let yindex=0,xindex=0;
             const me = this;
             const x = d3.scaleLinear()
@@ -30,14 +34,14 @@ export default {
             const svg=d3.select("#bar")
                 .append("svg")
                 .attr("width","600")
-                .attr("height","300");
+                .attr("height",this.height+30);
             let gs=svg.append("g")
                 .selectAll(".con")
                 .data(this.stu)
                 .enter()
                 .append("g")
                 .attr("transform",function(d,i){
-                    return "translate("+(parseInt(i/14)*180+100)+","+((i%14)*17+20)+")";
+                    return "translate("+(parseInt(i/14)*180+100)+","+((i%14)*(that.height/14)+20)+")";
                 });
             gs.append("rect")
                 .attr("x","0")
@@ -45,7 +49,7 @@ export default {
                 .attr("width",function(d,i){
                     return x(d.male+d.female)
                 })
-                .attr("height","15")
+                .attr("height",this.height/14)
                 .attr("fill",me.color1[0])
                 .attr("fill-opacity","0.4")
                 .style("cursor","pointer")
@@ -64,7 +68,7 @@ export default {
                 .attr("width",function(d,i){
                     return x(d.rate[0]+d.rate[1]);
                 })
-                .attr("height","15")
+                .attr("height",this.height/14)
                 .attr("fill",me.color1[0])
                 .attr("fill-opacity","1");
             //图例
@@ -81,7 +85,7 @@ export default {
                 })
                 .attr("transform",function(d,i){
                     //return "translate("+0+","+(i*17+33)+")";
-                    return "translate("+(parseInt(i/14)*190)+","+((i%14)*17+33)+")";
+                    return "translate("+(parseInt(i/14)*190)+","+((i%14)*(that.height/14)+33)+")";
                 })
                 .on("mouseover",function(){
                     d3.select(this)
@@ -104,7 +108,7 @@ export default {
                 .attr("width",function(d,i){
                     return x(d.male)
                 })
-                .attr("height","15")
+                .attr("height",this.height/14)
                 .attr("fill",me.color1[0])
                 .attr("fill-opacity","0.4")
                 .style("cursor","pointer");
@@ -120,7 +124,7 @@ export default {
                 .attr("width",function(d,i){
                     return x(d.female);
                 })
-                .attr("height","15")
+                .attr("height",this.height/14)
                 .attr("fill",me.color1[1])
                 .attr("fill-opacity","0.4")
                 .style("cursor","pointer");
@@ -132,7 +136,7 @@ export default {
                 .attr("width",function(d,i){
                     return x(d.rate[0])
                 })
-                .attr("height","15")
+                .attr("height",this.height/14)
                 .attr("fill",me.color1[0]);
             gs.append("rect")
                 .attr("x",function(d,i){
@@ -144,12 +148,14 @@ export default {
                 .attr("width",function(d,i){
                     return x(d.rate[1])
                 })
-                .attr("height","15")
+                .attr("height",this.height/14)
                 .attr("fill",me.color1[1]);
         }
     },
     created() {},
     mounted() {
+        var s=document.getElementById("downpage")
+        this.height=s.offsetHeight-50;
         this.getData();
     }
 };

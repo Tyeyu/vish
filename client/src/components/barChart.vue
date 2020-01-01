@@ -10,7 +10,8 @@ export default {
     data() {
         return {
             //测试数据
-            data:[5,6,4,2,1,5,15,16,14,10,10,10,15,16,14,30,14,20,5,6,4,2,1,5,15,16,0,5,4,6,1]
+            data:[5,6,4,2,1,5,15,16,14,10,10,10,15,16,14,30,14,20,5,6,4,2,1,5,15,16,0,5,4,6,1],
+            height:null,
         };
     },
     computed: {},
@@ -29,13 +30,13 @@ export default {
                 .select("#barChart")
                 .append("svg")
                 .attr("width", 460)
-                .attr("height", 280);
+                .attr("height", this.height+30);
             const x = d3.scaleLinear()
                 .domain([-1,30])
                 .range([0, 420]);
             const y = d3.scaleLinear()
                 .domain([0,30])
-                .range([200, 0]);
+                .range([this.height, 0]);
             const xAxis = d3.axisBottom(x)
                 .ticks(30)
                 .tickFormat((d)=>{
@@ -45,26 +46,26 @@ export default {
             //坐标轴
             svg.append("g")
                 .call(xAxis)
-                .attr("transform", "translate(20,240)")
+                .attr("transform", "translate(20,"+(this.height+10)+")")
                 .attr("class","axis");
             svg.append("g")
                 .call(yAxis)
-                .attr("transform", "translate(20,40)")
+                .attr("transform", "translate(20,10)")
                 .attr("class","axis");
             //
             svg.selectAll("bar")
                 .data(this.data)
                 .enter().append("rect")
-                .attr("transform","translate(20,40)")
+                .attr("transform","translate(20,10)")
                 .style("fill", "#1f78b4")
                 .attr("x", function(d,i) { return x(i)-1; })
                 .attr("width", "2")
                 .attr("y", function(d,i) { return y(d); })
-                .attr("height", function(d) { return 200 - y(d); });
+                .attr("height", function(d) { return me.height - y(d); });
             svg.selectAll("circle")
                 .data(this.data)
                 .enter().append("circle")
-                .attr("transform","translate(20,40)")
+                .attr("transform","translate(20,10)")
                 .attr("cx",function(d,i) { return x(i); })
                 .attr("cy",function(d,i) { return y(d); })
                 .attr("r","4")
@@ -94,6 +95,8 @@ export default {
     created() {},
     mounted() {
         //this.getData();
+        var s=document.getElementById("downpage")
+        this.height=s.offsetHeight-70;
         this.draw();
     }
 };

@@ -10,7 +10,8 @@ export default {
     data() {
         return {
             //测试数据
-            data:[0,2,3,4,5,6,7,24,9,30,11,6,8,7,7,12,10,3,7]
+            data:[0,2,3,4,5,6,7,24,9,30,11,6,8,7,7,12,10,3,7],
+            height:null,
         };
     },
     computed: {},
@@ -28,13 +29,13 @@ export default {
                 .select("#histogram")
                 .append("svg")
                 .attr("width", 240)
-                .attr("height", 300);
+                .attr("height", this.height);
             const x = d3.scaleLinear()
                 .domain([0,30])
                 .range([0, 200]);
             const y = d3.scaleLinear()
                 .domain([0,20])
-                .range([0, 240]);
+                .range([0,this.height-60]);
             
             const yAxis=d3.axisLeft(y).ticks(5);
             const xAxis=d3.axisTop(x).ticks(5);
@@ -75,6 +76,8 @@ export default {
     },
     created() {},
     mounted() {
+        var s=document.getElementById("downpage")
+        this.height=s.offsetHeight-50;
         this.getData();
     }
 };

@@ -102,6 +102,9 @@ export default {
                 .append("svg")
                 .attr("width",width)
                 .attr("height", height);
+            //
+           
+
               //添加星期
             svg.append("g")
             .selectAll("text")
