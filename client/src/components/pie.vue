@@ -12,20 +12,6 @@ export default {
            
         };
     },
-    computed: {
-        selectedMajor () {
-            return this.$store.getters.getSelectedMajor;
-        }
-    },
-    watch: {
-         selectedMajor:function(newval,oldval){
-             if(newval){
-                 d3.select("#pie").selectAll("svg").remove();
-                this.draw(this.data[newval]);
-             }
-            
-         }
-    },
     methods: {
         getData:function(){
             this.axios.get("static/depconsume.json").then((data)=>{
@@ -88,7 +74,7 @@ export default {
                         return color(d.Dept);
                     });
             svg.append("text")
-                .text(this.selectedMajor)
+                .text(this.$store.getters.getSelectedMajor)
                 .attr("transform","translate(0,13)")
                 .attr("style","font-weight:100")
                 .attr("style","font-size:15px")
@@ -102,6 +88,9 @@ export default {
     computed: {
         Colors(){
             return this.$store.getters.getforceColorScale;
+        },
+        selectedMajor () {
+            return this.$store.getters.getSelectedMajor;
         }
     },
     watch:{
@@ -112,7 +101,14 @@ export default {
                 d3.select("#pie").selectAll("svg").remove();
                 this.getData();
             }
-       }
+       },
+        selectedMajor:function(newval,oldval){
+             if(newval){
+                 d3.select("#pie").selectAll("svg").remove();
+                this.draw(this.data[newval]);
+             }
+            
+         }
     }
 };
 </script>

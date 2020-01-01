@@ -6,6 +6,15 @@
         <div class="line-separator-1"></div>
         </div>
         <div>
+            <h4>流量</h4>
+            </div>
+             <div class="custom-control custom-radio">
+            <input
+                type="radio" name="spend" checked="checked" @click="Allflow()"
+            />
+            <label class="custom-control-labe2" >总体情况</label>
+            </div>
+            <div class="line-separator-1"></div>
             <h4>消费</h4>
             <div class="custom-control custom-radio">
             <input
@@ -21,17 +30,9 @@
             </div> -->
             <div class="line-separator-1"></div>
         </div>
-        <div>
-            <h4>流量</h4>
-            </div>
-             <div class="custom-control custom-radio">
-            <input
-                type="radio" name="spend" checked="checked" @click="Allflow()"
-            />
-            <label class="custom-control-labe2" >总体情况</label>
-            </div>
-            <div class="line-separator-1"></div>
-        </div>
+        <!-- <div>
+            
+        </div> -->
         <div class="titles">
            <label  >{{message}}</label>
         </div>
