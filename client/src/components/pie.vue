@@ -88,7 +88,7 @@ export default {
                         return color(d.Dept);
                     });
             svg.append("text")
-                .text(this.selectedMajor)
+                .text(this.$store.getters.getSelectedMajor)
                 .attr("transform","translate(0,13)")
                 .attr("style","font-weight:100")
                 .attr("style","font-size:15px")
