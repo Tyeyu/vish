@@ -71,12 +71,19 @@ export default {
                 }
             ];
             option = {
+                title: {
+                    text: "各食堂\n营业额占比",
+                    x: "left",
+                     textStyle:{
+                        color:"antiquewhite"
+                    }
+                },
                 color:["#FFCCCC","#99CC33","#66CCCC","#CCCCFF","#6699CC"],
                 series: {
                     type: "sunburst",
                     highlightPolicy: "ancestor",
                     data: data,
-                    radius: [0, "90%"],
+                    radius: [0, "85%"],
                     label: {
                         rotate: "radial",
                         fontSize: "10px"

@@ -74,7 +74,7 @@ export default {
                     .attr("transform","translate(480,0)")
                     .append("path")
                         .attr("d",line(data.slice(28,30)));
-                gs.selectAll("circle")
+                let c=gs.selectAll("circle")
                     .data(data)
                     .enter()
                     .append("circle")
@@ -84,7 +84,21 @@ export default {
                         .attr("cy",function(d){
                             return y(d);
                         })
-                        .attr("r",4);
+                        .attr("r",4)
+                        .on("mousemove",function(){
+                            d3.select(this)
+                                .transition()
+                                .duration(300)
+                                .attr("r",6)
+                        })
+                        .on("mouseout",function(){
+                            d3.select(this)
+                                .transition()
+                                .duration(300)
+                                .attr("r",4)
+                        })
+                c.append("title")
+                    .text(function(d){return d});
             }
             //图例
             let le=[{"boy":"男"},{"ave":"平均"},{"girl":"女"}];
