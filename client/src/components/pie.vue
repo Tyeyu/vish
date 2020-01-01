@@ -51,7 +51,7 @@ export default {
                 })
                 .attr("fill",function(d,i){
                    
-                   var color=that.$store.getters.getforceColorScale
+                   var color=that.$store.getters.getforceColorScale;
                     return color(d.data.Dept);
                 })
                 .attr("style","cursor:pointer")
@@ -89,7 +89,22 @@ export default {
     },
     created() {},
     mounted() {
-        this.getData();
+        // this.getData();
+    },
+    computed: {
+        Colors(){
+            return this.$store.getters.getforceColorScale;
+        }
+    },
+    watch:{
+      Colors:function(newval,oldval){
+        //    console.log(newval)
+            // console.log(newval)
+            if(newval!=null){
+                d3.select("#pie").selectAll("svg").remove();
+                this.getData();
+            }
+       }
     }
 };
 </script>
