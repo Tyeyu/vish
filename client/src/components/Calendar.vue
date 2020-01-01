@@ -625,7 +625,7 @@ export default {
                 }
                 var times = (new Date()).getTime()-clickTime;
                
-                if(change==1&&move&&times>200){
+                if(change==1&&move&&times>300){
                     
                        //最后通过和node的坐标比较，确定哪些点在圈选范围
                     var lend=["学生"]

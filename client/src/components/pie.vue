@@ -27,6 +27,7 @@ export default {
         }
         ,
         draw:function(data){
+            var that=this;
             //画饼图 
              const svg = d3
                 .select("#pie")
@@ -49,7 +50,9 @@ export default {
                     return arc_generator(d);
                 })
                 .attr("fill",function(d,i){
-                    return d3.schemePaired[i%12];
+                   
+                   var color=that.$store.getters.getforceColorScale
+                    return color(d.data.Dept);
                 })
                 .attr("style","cursor:pointer")
                 .on("mousemove",function(d){
@@ -72,7 +75,9 @@ export default {
                         return "translate("+175+","+(i*14+40)+")"
                     })
                     .attr("fill",function(d,i){
-                        return d3.schemePaired[i%12];
+                       
+                        var color=that.$store.getters.getforceColorScale
+                        return color(d.Dept);
                     });
             svg.append("text")
                 .text("18软件技术")

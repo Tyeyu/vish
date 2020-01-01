@@ -31,6 +31,7 @@ export default {
         },
         drawline:function(data){
             // console.log(data)
+            d3.select("#calendarline").selectAll("svg").remove();
             var width=550,height=300,left=30;
             let that=this;
             

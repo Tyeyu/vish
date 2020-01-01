@@ -168,7 +168,7 @@ export default {
     cursor: pointer;
 }
 #line_chart .boy{
-    fill: aqua;
+    fill: #1E90FF;
 }
 #line_chart .girl{
     fill:Tomato;
