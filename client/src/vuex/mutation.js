@@ -3,7 +3,6 @@ const mutation={
         state.Cforcedata=payload;
     },
     forcelegend_state(state,payload){
-        console.log("ssssss")
         state.forcelegend=payload;
     },
     forceSvg_state(state,payload){
@@ -32,6 +31,10 @@ const mutation={
     },
     selectdaydata_state(state,payload){
         state.selectdaydata=payload;
+    },
+    selectedMajor_state(state,major){
+        console.log(major)
+        state.selectedMajor=major;
     }
 }
 export default mutation;

@@ -31,6 +31,9 @@ const getter = {
     },
     getselectdaydata(state){
         return state.selectdaydata;
+    },
+    getSelectedMajor(state){
+        return state.selectedMajor;
     }
 }
 

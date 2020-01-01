@@ -9,65 +9,95 @@ export default {
     components: {},
     data() {
         return {
-            //测试数据
-            data:[0,2,3,4,5,6,7,24,9,30,11,6,8,7,7,12,10,3,7],
             height:null,
         };
     },
-    computed: {},
-    watch: {},
+    computed: {
+        selectedMajor () {
+            return this.$store.getters.getSelectedMajor;
+        }
+    },
+    watch: {
+        selectedMajor:function(newval,oldval){
+             if(newval){
+                d3.select("#histogram").selectAll("svg").remove();
+                this.data=this.stu[newval];
+                this.draw();
+             }
+            
+         }
+    },
     methods: {
         getData:function(){
-            this.axios.get("static/consume_rate.json").then((data)=>{
-                this.stu=data.data.data;
+            this.axios.get("static/histogram.json").then((data)=>{
+                this.stu=data.data;
+                this.data=this.stu['18软件技术'];
                 this.draw();
             })
         },
         draw:function(){
             const me = this;
+            const hei=(this.height-30)/40-2;
             const svg = d3
                 .select("#histogram")
                 .append("svg")
                 .attr("width", 240)
                 .attr("height", this.height);
             const x = d3.scaleLinear()
-                .domain([0,30])
+                .domain([0,20])
                 .range([0, 200]);
             const y = d3.scaleLinear()
-                .domain([0,20])
-                .range([0,this.height-60]);
+                .domain([0,40])
+                .range([0,this.height-30]);
             
             const yAxis=d3.axisLeft(y).ticks(5);
             const xAxis=d3.axisTop(x).ticks(5);
             //坐标轴
             svg.append("g")
                 .call(yAxis)
-                .attr("transform", "translate(30,50)")
+                .attr("transform", "translate(30,20)")
                 .attr("class","axis");
             svg.append("g")
                 .call(xAxis)
-                .attr("transform", "translate(30,50)")
+                .attr("transform", "translate(30,20)")
                 .attr("class","axis");
             //
-            svg.selectAll("bar")
+           let t=svg.selectAll("bar")
                 .data(this.data)
                 .enter().append("rect")
-                .attr("transform","translate(30,50)")
+                .attr("transform","translate(30,20)")
                 .style("fill", "#a6cee3")
+                .style("cursor","pointer")
                 .attr("y", function(d,i) { return y(i); })
-                .attr("height", "10")
+                .attr("height", hei)
                 .attr("x","1")
-                .attr("width", function(d) { return x(d); });
+                .attr("width", function(d) { return x(d); })
+                .on("mouseover",function(d,i){
+                    d3.select(this)
+                        .transition()
+                        .duration(100)
+                        .style("fill","Tomato")
+                })
+                .on("mouseout",function(d,i){
+                    d3.select(this)
+                        .transition()
+                        .duration(100)
+                        .style("fill","#a6cee3")
+                });
+                
+                
+            t.append("title")
+                .text(function(d,i){return i+"元 "+d+"人"})
             //图例
-            svg.append("text")
+            /* svg.append("text")
                 .text("本月日平均消费/人数")
                 .attr("transform","translate(30,23)")
                 .attr("style","font-weight:100")
                 .attr("style","font-size:15px")
-                .attr("fill","antiquewhite");
+                .attr("fill","antiquewhite"); */
             svg.append("text")
                 .text("人")
-                .attr("transform","translate(225,23)")
+                .attr("transform","translate(231,23)")
                 .attr("style","font-weight:100")
                 .attr("style","font-size:10px")
                 .attr("fill","antiquewhite");
@@ -77,7 +107,7 @@ export default {
     created() {},
     mounted() {
         var s=document.getElementById("downpage")
-        this.height=s.offsetHeight-50;
+        this.height=s.offsetHeight-30;
         this.getData();
     }
 };

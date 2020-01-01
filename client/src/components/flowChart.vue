@@ -39,8 +39,8 @@ export default {
             var myChart = echarts.init(dom);
             var option = {
                 title: {
-                    text: "各食堂营业额",
-                    x: "center",
+                    text: "各食堂收入趋势",
+                    x: "right",
                      textStyle:{
                         color:"antiquewhite"
                     }

@@ -108,7 +108,7 @@ export default {
 #sunburst {
     position: absolute;
     top: 1%;
-    left: calc(14% + 1100px);
+    left: calc(12% + 1050px);
     width: 330px;
     height: 300px;
 }

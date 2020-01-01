@@ -17,7 +17,8 @@ const store=new Vuex.Store({
         STspend:false,
         professionSpend:false,
         Allflow:true,
-        selectdaydata:null
+        selectdaydata:null,
+        selectedMajor:'18软件技术'
     },
     mutations:mutation,
     actions:action,

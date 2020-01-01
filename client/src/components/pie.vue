@@ -12,8 +12,20 @@ export default {
            
         };
     },
-    computed: {},
-    watch: {},
+    computed: {
+        selectedMajor () {
+            return this.$store.getters.getSelectedMajor;
+        }
+    },
+    watch: {
+         selectedMajor:function(newval,oldval){
+             if(newval){
+                 d3.select("#pie").selectAll("svg").remove();
+                this.draw(this.data[newval]);
+             }
+            
+         }
+    },
     methods: {
         getData:function(){
             this.axios.get("static/depconsume.json").then((data)=>{
@@ -23,7 +35,7 @@ export default {
         },
         initData:function(){
             //对数据进行处理 
-            this.draw(this.data["18软件技术"])
+            this.draw(this.data["18软件技术"]);
         }
         ,
         draw:function(data){
@@ -41,7 +53,7 @@ export default {
                 .outerRadius(80);
             let gs=svg.append("g")
                 .attr("transform","translate(80,150)");
-            gs.selectAll("g")
+            let san=gs.selectAll("g")
                 .data(pie)
                 .enter()
                 .append("path")
@@ -51,13 +63,9 @@ export default {
                 .attr("fill",function(d,i){
                     return d3.schemePaired[i%12];
                 })
-                .attr("style","cursor:pointer")
-                .on("mousemove",function(d){
-                    // console.log(d)
-                })
-                .on("mouseleave",function(){
-                    d3.selectAll(".hl").remove();
-                });
+                .attr("style","cursor:pointer");
+            san.append("title")
+                .text(function(d,i){return d.data.Dept+":"+d.data.money})
             //图例 
             svg.append("g")
                 .selectAll("text")
@@ -75,7 +83,7 @@ export default {
                         return d3.schemePaired[i%12];
                     });
             svg.append("text")
-                .text("18软件技术")
+                .text(this.selectedMajor)
                 .attr("transform","translate(0,13)")
                 .attr("style","font-weight:100")
                 .attr("style","font-size:15px")
@@ -94,7 +102,7 @@ export default {
     height: 250px;
     position: absolute;
     left: calc(2% + 610px);
-    top: calc(2% + 580px);
+    top: calc(2% + 585px);
     z-index: 2;
 }
 </style>
