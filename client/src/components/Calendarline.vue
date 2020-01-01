@@ -84,6 +84,11 @@ export default {
                 .append("svg")
                 .attr("width", width)
                 .attr("height", height);
+            svg.append("text")
+            .attr("fill","white")
+            .attr("transform", "translate(25,25)")
+            .text(this.$store.getters.getCaClickdate+"选中地区日流量图")
+
             var xAxis = d3.axisBottom(timescale)
                 .ticks(5)
                 .tickFormat((d)=>{
@@ -337,7 +342,7 @@ export default {
             var myChart = echarts.init(dom1);
             var option = {
                     title: {
-                        text: title,
+                        text: title+"各专业日流量",
                         textStyle:{
                         //文字颜色
                             color:'white',
@@ -408,7 +413,7 @@ export default {
          
        },
        Calegend:function(newval,oldval){
-           console.log(newval)
+        //    console.log(newval)
            if(this.$store.getters.getAllflow&&this.$store.getters.getCaClickdate!=null){
                if(newval!=null){
                    d3.select("#calendarline").selectAll("svg").remove();

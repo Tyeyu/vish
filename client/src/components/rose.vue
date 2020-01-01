@@ -116,6 +116,7 @@ export default {
                 d3.select("#calendarline").selectAll("svg").remove();
                 d3.selectAll("#ec").remove();
                 d3.selectAll("#ebar").remove();
+                d3.selectAll("#edraline").remove();
                 this.axios.get('static/day.json').then(result=>{
                 this.data=result.data;
                 this.draw1();
